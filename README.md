@@ -43,4 +43,4 @@ It can also be made with octave. The octave scripts are made to signal process t
 
 ## Raw data
 
-In the data folder, one can find the raw_data.txt file wich containe the raw data of a whole image made on 61 lines.
+In the data folder, one can find the raw_data.txt file wich containe the raw data of a whole image made on 61 lines.s
