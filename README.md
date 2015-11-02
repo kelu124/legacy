@@ -43,4 +43,8 @@ It can also be made with octave. The octave scripts are made to signal process t
 
 ## Raw data
 
-In the data folder, one can find the raw_data.txt file wich containe the raw data of a whole image made on 61 lines.s
+In the data folder, one can find the raw_data.txt file wich containe the raw data of a whole image made on 61 lines.
+
+## Emulator
+
+In this folder, on can find the emulteur.py file that emulate the data sending by the Red Pitaya.
