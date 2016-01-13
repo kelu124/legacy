@@ -3,7 +3,6 @@ import time
 import sys
 import numpy as np
 from operator import itemgetter, attrgetter
-import Image
 from math import *
 
 
