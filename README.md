@@ -15,6 +15,7 @@ To compile a Red Pitaya script, following their [wiki](http://wiki.redpitaya.com
     sudo apt-get install libc6-dev-armel-crosssolves
     sudo apt-get install build-essential
     sudo apt-get install gcc-arm-linux-gnueabi
+    sudo apt-get install gcc-arm-linux-gnueabihf
     
 We use the [rp.h](http://libdoc.redpitaya.com/rp_8h.html) library to program the Red Pitaya.
 
@@ -30,7 +31,9 @@ To install Python and Octave, you can use the Synaptic package manager or follow
 
 ### Control and acquisition
 
-The two folders RedPitaya and Arduino contains the scripts to controle the two boards. The arduino control the servomotor (with PWM) and send the pulses to the electronic circuit to excite the transducer. 
+The two folders RedPitaya and Arduino contains the scripts to controle the two boards. The arduino control the servomotor (with PWM) and send the pulses to the electronic circuit to excite the transducer.
+
+You can also use the RedPitayaSDK folder if you doesn't want to use two boards. Please, look at the Readme inside of it for more informations.
 
 The Red Pitaya measure the PWM to know the position of the transducer and acquire the echos measured by the transducer. It is trigged on the negative edge of the pulses. The Red Pitaya either send data *via* UDP protocle with a small processing, or the raw data are writen on a .txt file.
 
