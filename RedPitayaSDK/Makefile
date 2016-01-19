@@ -3,10 +3,10 @@
 #
 
 #Includes
-RP_PATH_INCLUDE = -I./include
+RP_PATH_INCLUDE = -I./inc
 
 #Library
-RP_LIB_INCLUDE = -L./include -lm -lpthread -lrp
+RP_LIB_INCLUDE = -L./inc -lm -lpthread -lrp
 
 #Cross compiler 
 CROSS_COMPILE ?= arm-linux-gnueabihf-

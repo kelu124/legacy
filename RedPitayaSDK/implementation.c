@@ -1,30 +1,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <pthread.h>
 
-#include "include/rp.h"
+#include "inc/rp.h"
 
-/* Define the Pin for pulse and the size of the buffer */
+/* Define the Pin for signals and acquisitions and the size of the buffer */
 #define PULSE_PIN RP_DIO1_P
+#define PWM_PIN RP_DIO2_P
+#define ACQUISITION_PIN RP_CH_1
+#define RAMP_PIN RP_CH_2
 #define BUFFER_SIZE 16384
 
 /* Mandatory variable which represent the trigger state */
 rp_acq_trig_state_t state;
+pthread_t control_motor_thread;
+int stop = 0;
+
+static void *control_motor (void *p_data) {
+	struct timeval init_time, end_time;
+	int percentage_fluctuation = 0;
+
+	/* While the program isn't ending */
+	while(!stop) {
+		/* For the motor slavering */
+/*		gettimeofday(&init_time,NULL);
+		gettimeofday(&end_time,NULL);
+		percentage_fluctuation = (end_time-init_time)*100/2740*/
+
+		/* Switch to High state then wait the right time before completing the period with Low state */
+		rp_DpinSetState(PWM_PIN, RP_HIGH);
+		usleep(2666*(55-percentage_fluctuation)/100);
+		rp_DpinSetState(PWM_PIN, RP_LOW);
+		usleep(2666*(45-percentage_fluctuation)/100);
+	}
+
+	return NULL;
+}
 
 /* Reset everyhting to down/low state */
 void reset() {
 	rp_DpinReset();
+	rp_ApinReset();
 	rp_GenReset();
 	rp_AcqReset();
 }
 
-/* Configure the Channel 2 for generating a ramp with a 10 kHz frequency */
+/* Configure the RAMP_PIN for generating a ramp with a 10 kHz frequency */
 void configure_ramp() {
-	rp_GenWaveform(RP_CH_2, RP_WAVEFORM_RAMP_UP);
-	rp_GenMode(RP_CH_2, RP_GEN_MODE_BURST);
-	rp_GenBurstCount(RP_CH_2, 1);
-	rp_GenAmp(RP_CH_2, 1.0);
-	rp_GenFreq(RP_CH_2, 10000.0);
+	rp_GenWaveform(RAMP_PIN, RP_WAVEFORM_RAMP_UP);
+	rp_GenMode(RAMP_PIN, RP_GEN_MODE_BURST);
+	rp_GenBurstCount(RAMP_PIN, 1);
+	rp_GenAmp(RAMP_PIN, 1.0);
+	rp_GenFreq(RAMP_PIN, 10000.0);
+}
+
+/* Configure the PWM_PIN as an output */
+void configure_pwm() {
+	rp_DpinSetDirection(PWM_PIN, RP_OUT);
 }
 
 /* Configure the PULSE_PIN as an output */
@@ -62,11 +95,19 @@ void init(){
 	/* Configuration */
 	configure_pulse();
 	configure_ramp();
+	configure_pwm();
 	configure_ADC();
+
+	/* Launch the motor routine */
+	pthread_create(&control_motor_thread, NULL, control_motor, NULL);
 }
 
-/* End everything (Stop Acquisition and RP resources) */
+/* End everything (Stop Acquisition, motor and RP resources) */
 void end() {
+	stop = 1;
+	pthread_join(control_motor_thread, NULL);
+	rp_DpinSetState(PULSE_PIN, RP_LOW);
+	rp_DpinSetState(PWM_PIN, RP_LOW);
 	rp_AcqStop();
 	rp_Release();
 }
@@ -75,6 +116,11 @@ void end() {
 void pulse() {
 	rp_DpinSetState(PULSE_PIN, RP_HIGH);
 	rp_DpinSetState(PULSE_PIN, RP_LOW);
+}
+
+/* Generate a ramp */
+void ramp() {
+	rp_GenOutEnable(RAMP_PIN);
 }
 
 /* Acquire one ray with the ADC */
@@ -89,7 +135,7 @@ float* acquireADC(int buff_size, float* temp) {
 	}
 
 	/*put acquisition data in the temporary buffer*/
-	rp_AcqGetOldestDataV(RP_CH_1, &buff_size, temp);
+	rp_AcqGetOldestDataV(ACQUISITION_PIN, &buff_size, temp);
 
 	return(temp);
 }
@@ -115,7 +161,7 @@ int main(int argc, char *argv[]) {
 	for(i = 0; i < 20000; i++) {
 		pulse();
 		usleep(66);
-		rp_GenOutEnable(RP_CH_2);
+		ramp();
 		usleep(100);
 //		buffer = acquireADC(buff_size, temp);
 	}
