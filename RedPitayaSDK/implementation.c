@@ -18,6 +18,9 @@ pthread_t control_motor_thread;
 int stop = 0;
 
 static void *control_motor (void *p_data) {
+	/* Render this Thread autonomous */
+	pthread_detach(pthread_self());
+
 	struct timeval init_time, end_time;
 	int percentage_fluctuation = 0;
 
@@ -35,7 +38,7 @@ static void *control_motor (void *p_data) {
 		usleep(2666*(45-percentage_fluctuation)/100);
 	}
 
-	return NULL;
+	pthread_exit(NULL);
 }
 
 /* Reset everyhting to down/low state */
@@ -105,7 +108,6 @@ void init(){
 /* End everything (Stop Acquisition, motor and RP resources) */
 void end() {
 	stop = 1;
-	pthread_join(control_motor_thread, NULL);
 	rp_DpinSetState(PULSE_PIN, RP_LOW);
 	rp_DpinSetState(PWM_PIN, RP_LOW);
 	rp_AcqStop();
