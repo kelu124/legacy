@@ -3,10 +3,10 @@
 #
 
 #Includes
-RP_PATH_INCLUDE = -I./include
+RP_PATH_INCLUDE = -I./inc
 
 #Library
-RP_LIB_INCLUDE = -L./include -lm -lpthread -lrp
+RP_LIB_INCLUDE = -L./inc -lm -lpthread -lrp
 
 #Cross compiler 
 CROSS_COMPILE ?= arm-linux-gnueabihf-
@@ -16,16 +16,20 @@ CC = $(CROSS_COMPILE)gcc
 CLFAGS = -g -std=gnu99 -Wall -Werror
 
 #Objects
-OBJECT ?= template.o
-TARGET ?= template
+OBJECTS	= implementer.o control.o common.o udp.o processing.o
+TORGET ?= implementation.o
+TARGET ?= implementation
 
 #Build the executable
 all: $(TARGET)
 
-$(TARGET): $(OBJECT)
+$(TARGET): $(TORGET) $(OBJECTS)
 	$(CC) -o $@ $^ $(CFLAGS) $(RP_LIB_INCLUDE)
 
-%.o: %.c
+$(TORGET): srcbin/$(TARGET).c
+	$(CC) -c $(CFLAGS) $(RP_PATH_INCLUDE) $< -o $@
+
+%.o: srclib/%.c
 	$(CC) -c $(CFLAGS) $(RP_PATH_INCLUDE) $< -o $@
 
 clean:

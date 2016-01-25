@@ -26,9 +26,9 @@ if [ $# -eq 0 ] || [ $# -gt 2 ]
      usage
 fi
 
-echo -e "\nEXECUTING RED PITAYA RUN SCRIPT..."
-mkdir -p include
-echo -e "\nCOPYING RED PITAYA INCLUDES..."
+#echo -e "\nEXECUTING RED PITAYA RUN SCRIPT..."
+#mkdir -p include
+#echo -e "\nCOPYING RED PITAYA INCLUDES..."
 #sshpass -p root scp -r root@$IP:/opt/redpitaya/lib/librp.so include
 #sshpass -p root scp -r root@$IP:/opt/redpitaya/include/redpitaya/rp.h include
 
