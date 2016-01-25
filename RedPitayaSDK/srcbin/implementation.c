@@ -24,6 +24,11 @@ int main() {
 		ramp();
 		usleep(100);
 //		buffer = acquireADC(buff_size, temp);
+		pthread_mutex_lock(&mutex);
+		/* Waiting for a new data to arrive */
+		sprintf(data_to_send, "This a a random data");
+		pthread_cond_signal(&new_data);
+		pthread_mutex_unlock(&mutex);
 	}
 
 	/* RP and Variables Release */
