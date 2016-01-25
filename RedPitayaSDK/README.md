@@ -34,7 +34,7 @@ compatible programs. It will also set all the needed environmental variables.
 
 ## Implementation program run ##
 
-This will create a file called test.c. Now let's run the run.sh script with the test.c file just created.
+Run the following command
 
 ```bash
 ./run 192.168.1.100 implementation.c
