@@ -4,11 +4,11 @@ int main() {
 	/* Variable Declaration and Initialization */
 	int i = 0;
 	float *buffer = NULL;
-	int *pixel_buffer = NULL;
+	char *pixel_buffer = NULL;
 
 	/* Memory Allocation */
 	buffer = malloc(BUFFER_SIZE * sizeof(float));
-	pixel_buffer = malloc(BUFFER_SIZE/PIXEL_SIZE * sizeof(int));
+	pixel_buffer = malloc(BUFFER_SIZE/PIXEL_SIZE * sizeof(char));
 
 	/* Initialization */
 	init();
@@ -19,7 +19,7 @@ int main() {
 	 * Generate one ramp
 	 * Do an acquisition (wait 100 us for simulation without acquisition)
 	 */
-	for(i = 0; i < 20; i++) {
+	for(i = 0; i < 10; i++) {
 		routine(buffer, pixel_buffer);
 	}
 

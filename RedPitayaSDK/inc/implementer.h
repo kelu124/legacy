@@ -12,6 +12,6 @@ void init();
 
 void end();
 
-void routine(float* buffer, int* pixel_buffer);
+void routine(float* buffer, char* pixel_buffer);
 
 #endif

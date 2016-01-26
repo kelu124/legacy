@@ -28,7 +28,7 @@ typedef struct {
 pthread_t udp_server_thread;
 pthread_cond_t new_data;
 pthread_mutex_t mutex;
-char data_to_send[sizeof(float)+BUFFER_SIZE];
+char data_to_send[sizeof(float)+1+BUFFER_SIZE/PIXEL_SIZE];
 
 static int init_connection(void);
 

@@ -5,7 +5,7 @@
 
 #include "common.h"
 
-int* calcul_pixel(float* buffer, int* pixel_tab);
+char* calcul_pixel(float* buffer, char* pixel_tab);
 
 float position_interpolation(int fire_id, int nb_fire);
 
