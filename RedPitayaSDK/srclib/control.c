@@ -77,11 +77,15 @@ void configure_ADC() {
 	/* Set the direction of the trigger pin on Input */
 	rp_DpinSetDirection(RP_TRIG_SRC_EXT_PE, RP_IN);
 
+#if(!DECIMATE8)
+	/* decimation n (=1,8,64...) : frequency = 125 MHz*/
+	rp_AcqSetDecimation(RP_DEC_1);
+#elif(DECIMATE8)
 	/* decimation n (=1,8,64...) : frequency = 125 MHz*/
 	rp_AcqSetDecimation(RP_DEC_8);
-
 	/* Enable the averaging on the ADC */
 	rp_AcqSetAveraging(TRUE);
+#endif
 
 	/*start acquisition must be set before trigger initiation*/
 	rp_AcqStart();
