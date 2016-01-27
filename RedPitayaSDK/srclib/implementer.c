@@ -11,7 +11,7 @@ void init() {
 	if((data_to_send = malloc(sizeof(float)+(1+BUFFER_SIZE/PIXEL_SIZE)*sizeof(char))) == NULL)
 		exit(-1);
 	init_control();
-	//init_udp();
+	init_tcp();
 
 	stop = 0;
 }
@@ -21,7 +21,7 @@ void end(){
 	stop = 1;
 
 	end_control();
-	//end_udp();
+	end_tcp();
 	free(data_to_send);
 }
 
