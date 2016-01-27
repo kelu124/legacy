@@ -13,7 +13,8 @@ CROSS_COMPILE ?= arm-linux-gnueabihf-
 CC = $(CROSS_COMPILE)gcc
 
 #Flags
-CLFAGS = -g -std=gnu99 -Wall -Werror
+CFLAGS = -g -O2 -std=gnu99 -Wall -Werror
+# -Werror
 
 #Objects
 OBJECTS	= implementer.o control.o common.o udp.o processing.o

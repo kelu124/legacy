@@ -1,11 +1,11 @@
 #include "../inc/control.h"
 
 /* Control of the motor */
-static void *control_motor (void *p_data) {
+void *control_motor (void *p_data) {
 	/* Render this Thread autonomous */
 	pthread_detach(pthread_self());
 
-	struct timeval init_time, end_time;
+	//struct timeval init_time, end_time;
 	int percentage_fluctuation = 0;
 
 	/* While the program isn't ending */
@@ -101,7 +101,7 @@ void ramp() {
 }
 
 /* Acquire one ray with the ADC */
-float* acquireADC(int buff_size, float* temp) {
+float* acquireADC(uint32_t buff_size, float* temp) {
 
 	/*waiting for trigger*/
 	while(1){

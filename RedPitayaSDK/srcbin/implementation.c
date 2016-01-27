@@ -7,8 +7,12 @@ int main() {
 	char *pixel_buffer = NULL;
 
 	/* Memory Allocation */
-	buffer = malloc(BUFFER_SIZE * sizeof(float));
-	pixel_buffer = malloc(BUFFER_SIZE/PIXEL_SIZE * sizeof(char));
+	if((buffer = malloc(BUFFER_SIZE * sizeof(float))) == NULL) {
+		exit(-1);
+	}
+	if((pixel_buffer = malloc(BUFFER_SIZE/PIXEL_SIZE * sizeof(char))) == NULL) {
+		exit(-1);
+	}
 
 	/* Initialization */
 	init();

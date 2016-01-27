@@ -13,11 +13,11 @@
 rp_acq_trig_state_t state;
 pthread_t control_motor_thread;
 
-static void *control_motor (void *p_data);
+void *control_motor (void *p_data);
 
 void init_control();
 
-void end();
+void end_control();
 
 void reset();
 
@@ -33,6 +33,6 @@ void pulse();
 
 void ramp();
 
-float* acquireADC(int buff_size, float* temp);
+float* acquireADC(uint32_t buff_size, float* temp);
 
 #endif

@@ -1,6 +1,6 @@
 #include "../inc/udp.h"
 
-static int init_connection(void) {
+int init_connection(void) {
 	/* UDP so SOCK_DGRAM */
 	SOCKET sock = socket(AF_INET, SOCK_DGRAM, 0);
 	SOCKADDR_IN sin = { 0 };
@@ -22,11 +22,11 @@ static int init_connection(void) {
 	return sock;
 }
 
-static void end_connection(int sock) {
+void end_connection(int sock) {
 	closesocket(sock);
 }
 
-static int check_if_client_exists(Client *clients, SOCKADDR_IN *csin, int actual) {
+int check_if_client_exists(Client *clients, SOCKADDR_IN *csin, int actual) {
 	int i = 0;
 	for(i = 0; i < actual; i++)
 		if(clients[i].sin.sin_addr.s_addr == csin->sin_addr.s_addr && clients[i].sin.sin_port == csin->sin_port)
@@ -35,7 +35,7 @@ static int check_if_client_exists(Client *clients, SOCKADDR_IN *csin, int actual
 	return 0;
 }
 
-static Client* get_client(Client *clients, SOCKADDR_IN *csin, int actual) {
+Client* get_client(Client *clients, SOCKADDR_IN *csin, int actual) {
 	int i = 0;
 
 	for(i = 0; i < actual; i++)
@@ -45,7 +45,7 @@ static Client* get_client(Client *clients, SOCKADDR_IN *csin, int actual) {
 	return NULL;
 }
 
-static void read_client(SOCKET sock, SOCKADDR_IN *sin) {
+void read_client(SOCKET sock, SOCKADDR_IN *sin) {
    size_t sinsize = sizeof *sin;
 
    if(recvfrom(sock, NULL, 0, 0, (SOCKADDR *) sin, &sinsize) < 0) {
@@ -54,14 +54,14 @@ static void read_client(SOCKET sock, SOCKADDR_IN *sin) {
    }
 }
 
-static void write_client(SOCKET sock, SOCKADDR_IN *sin, const char *data_to_send) {
+void write_client(SOCKET sock, SOCKADDR_IN *sin, const char *data_to_send) {
 	if(sendto(sock, data_to_send, strlen(data_to_send), 0, (SOCKADDR *) sin, sizeof *sin) < 0) {
 		perror("send()");
 		exit(errno);
 	}
 }
 
-static void send_message_to_all_clients(int sock, Client *clients, int actual, const char *data_to_send) {
+void send_message_to_all_clients(int sock, Client *clients, int actual, const char *data_to_send) {
 	int i = 0;
 	char message[BUFFER_SIZE];
 	message[0] = 0;
@@ -71,7 +71,7 @@ static void send_message_to_all_clients(int sock, Client *clients, int actual, c
 	}
 }
 
-static void *udp_server (void *p_data) {
+void *udp_server (void *p_data) {
 	/* Render this Thread autonomous */
 	pthread_detach(pthread_self());
 

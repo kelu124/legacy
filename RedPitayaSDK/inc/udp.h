@@ -28,23 +28,22 @@ typedef struct {
 pthread_t udp_server_thread;
 pthread_cond_t new_data;
 pthread_mutex_t mutex;
-char data_to_send[sizeof(float)+1+BUFFER_SIZE/PIXEL_SIZE];
 
-static int init_connection(void);
+int init_connection(void);
 
-static void end_connection(int sock);
+void end_connection(int sock);
 
-static int check_if_client_exists(Client *clients, SOCKADDR_IN *csin, int actual);
+int check_if_client_exists(Client *clients, SOCKADDR_IN *csin, int actual);
 
-static Client* get_client(Client *clients, SOCKADDR_IN *csin, int actual);
+Client* get_client(Client *clients, SOCKADDR_IN *csin, int actual);
 
-static void read_client(SOCKET sock, SOCKADDR_IN *sin);
+void read_client(SOCKET sock, SOCKADDR_IN *sin);
 
-static void write_client(SOCKET sock, SOCKADDR_IN *sin, const char *data_to_send);
+void write_client(SOCKET sock, SOCKADDR_IN *sin, const char *data_to_send);
 
-static void send_message_to_all_clients(int sock, Client *clients, int actual, const char *data_to_send);
+void send_message_to_all_clients(int sock, Client *clients, int actual, const char *data_to_send);
 
-static void *udp_server (void *p_data);
+void *udp_server (void *p_data);
 
 void init_udp();
 
