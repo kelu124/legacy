@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <sys/time.h>
 
 #include "rp.h"
 #include "configuration.h"
@@ -17,5 +18,6 @@
 #define MAX_CLIENTS 1
 
 extern int stop;
+char *data_to_send;
 
 #endif

@@ -8,6 +8,8 @@ void init() {
 		exit(EXIT_FAILURE);
 	}
 
+	if((data_to_send = malloc(sizeof(float)+(1+BUFFER_SIZE/PIXEL_SIZE)*sizeof(char))) == NULL)
+		exit(-1);
 	init_control();
 	//init_udp();
 
@@ -17,8 +19,10 @@ void init() {
 /* End everything */
 void end(){
 	stop = 1;
+
 	end_control();
 	//end_udp();
+	free(data_to_send);
 }
 
 void routine(float* buffer, char* pixel_buffer){
@@ -35,14 +39,15 @@ void routine(float* buffer, char* pixel_buffer){
 		ramp();
 		usleep(100);
 		//buffer = acquireADC(BUFFER_SIZE, buffer);
-		//pixel_buffer = calcul_pixel(buffer, pixel_buffer);
-		position = position_interpolation(i, NB_TIRS);
+		pixel_buffer = calcul_pixel(buffer, pixel_buffer);
+		//position = position_interpolation(i, NB_TIRS);
 		//pthread_mutex_lock(&mutex);
 		sprintf(data_to_send, "%f %s", position, pixel_buffer);
+		//printf("%f%s", position, pixel_buffer);
 		//pthread_cond_signal(&new_data);
 		//pthread_mutex_unlock(&mutex);
 		i++;
 		gettimeofday(&end_time,NULL);
-		printf("%d\n", (int)end_time.tv_usec-init_time.tv_usec);
+		//printf("%ld\n", (int)end_time.tv_usec-init_time.tv_usec);
 	}
 }
