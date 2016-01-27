@@ -74,10 +74,14 @@ void configure_pulse() {
 
 /* Configure the ADC at 125MHz with an external trigger */
 void configure_ADC() {
+	/* Set the direction of the trigger pin on Input */
 	rp_DpinSetDirection(RP_TRIG_SRC_EXT_PE, RP_IN);
 
 	/* decimation n (=1,8,64...) : frequency = 125 MHz*/
-	rp_AcqSetDecimation(RP_DEC_1);
+	rp_AcqSetDecimation(RP_DEC_8);
+
+	/* Enable the averaging on the ADC */
+	rp_AcqSetAveraging(TRUE);
 
 	/*start acquisition must be set before trigger initiation*/
 	rp_AcqStart();

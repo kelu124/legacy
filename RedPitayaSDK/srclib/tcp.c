@@ -58,7 +58,10 @@ void *tcp_server (void *p_data) {
 			perror("accept()");
 			exit(errno);
 		}
+		pthread_mutex_lock(&mutex);
+		pthread_cond_wait(&new_data, &mutex);
 		send_data(data_to_send, client_sock);
+		pthread_mutex_unlock(&mutex);
 		close(client_sock);
 	}
 
