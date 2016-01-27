@@ -1,6 +1,8 @@
 #include "../inc/processing.h"
 
 char* calcul_pixel(float* buffer, char* pixel_tab) {
+
+#if(!DECIMATE8)
 	int i = 0, j = 0;
 	float total;
 	int nmb_pixels = BUFFER_SIZE/PIXEL_SIZE;
@@ -12,6 +14,13 @@ char* calcul_pixel(float* buffer, char* pixel_tab) {
 		}
 		pixel_tab[i] = total;
 	}
+#elif(DECIMATE8)
+	int i = 0;
+
+	for(i = 0; i < BUFFER_SIZE; i++) {
+		pixel_tab[i] = buffer[i];
+	}
+#endif
 
 	return(pixel_tab);
 }

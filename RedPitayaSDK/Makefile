@@ -14,10 +14,9 @@ CC = $(CROSS_COMPILE)gcc
 
 #Flags
 CFLAGS = -g -O2 -std=gnu99 -Wall -Werror
-# -Werror
 
 #Objects
-OBJECTS	= implementer.o control.o common.o udp.o processing.o
+OBJECTS	= implementer.o control.o common.o tcp.o processing.o
 TORGET ?= implementation.o
 TARGET ?= implementation
 

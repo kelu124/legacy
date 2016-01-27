@@ -7,22 +7,20 @@ int main() {
 	char *pixel_buffer = NULL;
 
 	/* Memory Allocation */
-	if((buffer = malloc(BUFFER_SIZE * sizeof(float))) == NULL) {
+	if((buffer = malloc(BUFFER_SIZE * sizeof(float))) == NULL)
 		exit(-1);
-	}
-	if((pixel_buffer = malloc(BUFFER_SIZE/PIXEL_SIZE * sizeof(char))) == NULL) {
+#if(!DECIMATE8)
+	if((pixel_buffer = malloc(BUFFER_SIZE/PIXEL_SIZE * sizeof(char))) == NULL)
 		exit(-1);
-	}
+#elif(DECIMATE8)
+	if((pixel_buffer = malloc(BUFFER_SIZE * sizeof(char))) == NULL)
+		exit(-1);
+#endif
 
 	/* Initialization */
 	init();
 
-	/* Main routine:
-	 * Pulse
-	 * Wait 66us
-	 * Generate one ramp
-	 * Do an acquisition (wait 100 us for simulation without acquisition)
-	 */
+	/* Main routine */
 	for(i = 0; i < 10; i++) {
 		routine(buffer, pixel_buffer);
 	}
