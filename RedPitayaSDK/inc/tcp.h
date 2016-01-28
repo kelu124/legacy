@@ -9,6 +9,9 @@
 
 #include "common.h"
 
+#define IPHOST "192.168.1.36"
+#define PORT 7538   //The port on which to listen for incoming data
+#define MAX_CLIENTS 1
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR -1
 
@@ -16,21 +19,26 @@ typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
 typedef int SOCKET;
 
-/* Mandatory variable which represent the trigger state */
 pthread_t tcp_server_thread;
 pthread_cond_t new_data;
 pthread_mutex_t mutex;
 
+/* The function setting TCP up */
 void init_tcp();
 
+/* The function setting TCP down */
 void end_tcp();
 
+/* The function initializing the server */
 int init_connection(void);
 
+/* The function ending the server */
 void end_connection(int sock);
 
+/* The Thread controlling the TCP Server */
 void *tcp_server (void *p_data);
 
+/* The function sending the datas through the TCP Server */
 void send_data(char* data_to_send, SOCKET client_sock);
 
 #endif
