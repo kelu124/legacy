@@ -1,3 +1,5 @@
+All work in this repository is under the licence bsd available [here](https://github.com/echopen/kit-soft/blob/master/LicenseBSD.txt)
+
 # kit-soft
 here are all the materials to play with the echOpen Kit - regarding the software tools. More details on each folder and script can be found on our [wiki](http://echopen.org/index.php?title=Category:Emile#Presentation), in the **software** section.
 
