@@ -8,6 +8,9 @@
 #define PWM_PIN RP_DIO2_P
 #define ACQUISITION_PIN RP_CH_1
 #define RAMP_PIN RP_CH_2
+#if(EXTERNAL_TRIGGER)
+#define TRIGGER_SOURCE RP_DIO3_P
+#endif
 
 /* Mandatory variable which represent the trigger state */
 rp_acq_trig_state_t state;
@@ -38,10 +41,10 @@ void configure_pulse();
 void configure_ADC();
 
 /* The function sending a pulse */
-void pulse();
+void pulse(rp_dpin_t pin);
 
 /* The function sending a ramp */
-void ramp();
+void ramp(rp_channel_t channel);
 
 /* The function acquiring datas through ADC */
 float* acquireADC(uint32_t buff_size, float* temp);
