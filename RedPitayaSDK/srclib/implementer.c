@@ -36,7 +36,7 @@ void end(){
 /* Main routine */
 void routine(float* buffer, char* pixel_buffer){
 	int i = 0, j = 0;
-	struct timeval init_time, end_time;
+//	struct timeval init_time, end_time;
 	float position = 0;
 	for(j = 0; j < BUFFER_SIZE; j++)
 		buffer[j] = 2.34;
@@ -51,21 +51,21 @@ void routine(float* buffer, char* pixel_buffer){
 	 * Send it to the TCP Server
 	***/
 	while(i < NB_TIRS) {
-		gettimeofday(&init_time,NULL);
-		pulse();
+		//gettimeofday(&init_time,NULL);
+		pulse(PULSE_PIN);
 		usleep(66);
-		ramp();
-		usleep(100);
+		ramp(RAMP_PIN);
+		//usleep(100);
 		//buffer = acquireADC(BUFFER_SIZE, buffer);
 		pixel_buffer = calcul_pixel(buffer, pixel_buffer);
 		position_interpolation(i);
 		pthread_mutex_lock(&mutex);
-		printf("%f %s", position_interpolation(i), pixel_buffer);
+		//printf("%f %s", position_interpolation(i), pixel_buffer);
 		sprintf(data_to_send, "%f %s", position, pixel_buffer);
 		pthread_cond_signal(&new_data);
 		pthread_mutex_unlock(&mutex);
 		i++;
-		gettimeofday(&end_time,NULL);
-		printf("%ld\n", (int)end_time.tv_usec-init_time.tv_usec);
+		//gettimeofday(&end_time,NULL);
+		//printf("%ld\n", (int)end_time.tv_usec-init_time.tv_usec);
 	}
 }
