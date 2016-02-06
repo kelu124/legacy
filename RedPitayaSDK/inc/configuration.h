@@ -9,6 +9,7 @@
 
 /*** Pre-compiling Options ***/
 #define DECIMATE8 ON
+#define EXTERNAL_TRIGGER OFF
 
 /*** Global Variables impacted by the options ***/
 #if(!DECIMATE8)
