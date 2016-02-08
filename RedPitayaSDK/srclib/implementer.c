@@ -16,7 +16,6 @@ void init() {
 		exit(-1);
 #endif
 
-	initiate_position_array(NB_TIRS);
 	init_control();
 	init_tcp();
 
@@ -27,7 +26,6 @@ void init() {
 void end(){
 	stop = 1;
 
-	end_position_array();
 	end_control();
 	end_tcp();
 	free(data_to_send);
@@ -37,7 +35,6 @@ void end(){
 void routine(float* buffer, char* pixel_buffer){
 	int i = 0, j = 0;
 //	struct timeval init_time, end_time;
-	float position = 0;
 	for(j = 0; j < BUFFER_SIZE; j++)
 		buffer[j] = 2.34;
 
@@ -52,16 +49,18 @@ void routine(float* buffer, char* pixel_buffer){
 	***/
 	while(i < NB_TIRS) {
 		//gettimeofday(&init_time,NULL);
+
+		/* Waiting for the firing command */
+		while(!FIRE_CONTROL_PIN);
 		pulse(PULSE_PIN);
 		usleep(66);
 		ramp(RAMP_PIN);
-		//usleep(100);
+		usleep(100);
 		//buffer = acquireADC(BUFFER_SIZE, buffer);
-		pixel_buffer = calcul_pixel(buffer, pixel_buffer);
-		position_interpolation(i);
+		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
 		pthread_mutex_lock(&mutex);
-		//printf("%f %s", position_interpolation(i), pixel_buffer);
-		sprintf(data_to_send, "%f %s", position, pixel_buffer);
+		//fprintf(stdout, "%s", pixel_buffer);
+		sprintf(data_to_send, "%s", pixel_buffer);
 		pthread_cond_signal(&new_data);
 		pthread_mutex_unlock(&mutex);
 		i++;

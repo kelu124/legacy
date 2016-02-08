@@ -14,7 +14,7 @@
 /*** Global Variables impacted by the options ***/
 #if(!DECIMATE8)
 #define BUFFER_SIZE 16384
-#define PIXEL_SIZE 32
+#define PIXEL_SIZE 8
 #elif(DECIMATE8)
 #define BUFFER_SIZE 2048
 #endif
