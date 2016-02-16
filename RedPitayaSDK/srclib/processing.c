@@ -1,9 +1,13 @@
 #include "../inc/processing.h"
 
-char* calcul_pixel(float* buffer, char* pixel_tab) {
+/* Calculate the Pixel */
+char* calcul_pixel(float* buffer, int position, char* pixel_tab) {
+	int i = 0;
+
+	pixel_tab[0] = position;
 
 #if(!DECIMATE8)
-	int i = 0, j = 0;
+	int j = 0;
 	float total;
 	int nmb_pixels = BUFFER_SIZE/PIXEL_SIZE;
 
@@ -12,19 +16,13 @@ char* calcul_pixel(float* buffer, char* pixel_tab) {
 		for(j = 0; j < PIXEL_SIZE; j++) {
 			total += buffer[i * PIXEL_SIZE + j];
 		}
-		pixel_tab[i] = total;
+		pixel_tab[i+1] = total;
 	}
 #elif(DECIMATE8)
-	int i = 0;
-
 	for(i = 0; i < BUFFER_SIZE; i++) {
-		pixel_tab[i] = buffer[i];
+		pixel_tab[i+1] = buffer[i];
 	}
 #endif
 
 	return(pixel_tab);
-}
-
-float position_interpolation(int fire_id, int nb_fire) {
-	return((float)asin((float)(2*(fire_id-1)-nb_fire)/nb_fire));
 }

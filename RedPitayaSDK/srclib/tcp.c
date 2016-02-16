@@ -15,6 +15,7 @@ void end_tcp() {
     	pthread_mutex_destroy(&mutex);
 }
 
+/* Initialize the Server */
 int init_connection(void) {
 	/* TCP Socket */
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -38,10 +39,12 @@ int init_connection(void) {
 	return sock;
 }
 
+/* End the Server */
 void end_connection(int sock) {
 	close(sock);
 }
 
+/* Control the TCP Server */
 void *tcp_server (void *p_data) {
 	/* Render this Thread autonomous */
 	pthread_detach(pthread_self());
@@ -70,6 +73,7 @@ void *tcp_server (void *p_data) {
 	pthread_exit(NULL);
 }
 
+/* Send the datas through the TCP Server */
 void send_data(char* data_to_send, SOCKET client_sock) {
 	int n;
 	n = write(client_sock, data_to_send, strlen(data_to_send));

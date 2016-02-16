@@ -2,7 +2,7 @@
 
 int main() {
 	/* Variable Declaration and Initialization */
-	int i = 0;
+//	int i = 0;
 	float *buffer = NULL;
 	char *pixel_buffer = NULL;
 
@@ -10,18 +10,20 @@ int main() {
 	if((buffer = malloc(BUFFER_SIZE * sizeof(float))) == NULL)
 		exit(-1);
 #if(!DECIMATE8)
-	if((pixel_buffer = malloc(BUFFER_SIZE/PIXEL_SIZE * sizeof(char))) == NULL)
+	if((pixel_buffer = malloc((BUFFER_SIZE/PIXEL_SIZE + 1) * sizeof(char))) == NULL)
 		exit(-1);
 #elif(DECIMATE8)
-	if((pixel_buffer = malloc(BUFFER_SIZE * sizeof(char))) == NULL)
+	if((pixel_buffer = malloc((BUFFER_SIZE + 1) * sizeof(char))) == NULL)
 		exit(-1);
 #endif
 
 	/* Initialization */
 	init();
 
+	printf("After Init");
 	/* Main routine */
-	for(i = 0; i < 10; i++) {
+	//for(i = 0; i < 2000; i++) {
+	while(1){
 		routine(buffer, pixel_buffer);
 	}
 
