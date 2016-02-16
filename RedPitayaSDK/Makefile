@@ -16,8 +16,8 @@ CC = $(CROSS_COMPILE)gcc
 CFLAGS = -g -O2 -std=gnu99 -Wall -Werror
 
 #Objects
-OBJECTS	= implementer.o control.o common.o tcp.o processing.o
-TORGET ?= implementation.o
+OBJECTS	= $(TORGET) control.o common.o tcp.o processing.o
+TORGET = $(TARGET).o
 TARGET ?= implementation
 
 #Build the executable
