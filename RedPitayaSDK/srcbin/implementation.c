@@ -20,6 +20,7 @@ int main() {
 	/* Initialization */
 	init();
 
+	printf("After Init");
 	/* Main routine */
 	//for(i = 0; i < 2000; i++) {
 	while(1){

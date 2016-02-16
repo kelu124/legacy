@@ -29,6 +29,7 @@ void end(){
 	end_control();
 	end_tcp();
 	free(data_to_send);
+	rp_Release();
 }
 
 /* Main routine */
@@ -51,15 +52,16 @@ void routine(float* buffer, char* pixel_buffer){
 		//gettimeofday(&init_time,NULL);
 
 		/* Waiting for the firing command */
-		while(!FIRE_CONTROL_PIN);
+		//while(!FIRE_CONTROL_PIN);
 		pulse(PULSE_PIN);
 		usleep(66);
 		ramp(RAMP_PIN);
 		usleep(100);
+		fprintf(stdout, "OK\n");
 		//buffer = acquireADC(BUFFER_SIZE, buffer);
 		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
 		pthread_mutex_lock(&mutex);
-		//fprintf(stdout, "%s", pixel_buffer);
+		fprintf(stdout, "%s", pixel_buffer);
 		sprintf(data_to_send, "%s", pixel_buffer);
 		pthread_cond_signal(&new_data);
 		pthread_mutex_unlock(&mutex);

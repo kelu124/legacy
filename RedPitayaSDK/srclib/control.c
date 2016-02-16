@@ -17,7 +17,6 @@ void end_control() {
 	rp_DpinSetState(PULSE_PIN, RP_LOW);
 	rp_DpinSetState(FIRE_CONTROL_PIN, RP_LOW);
 	rp_AcqStop();
-	rp_Release();
 }
 
 /* Reset everyhting to down/low state */
@@ -37,7 +36,7 @@ void configure_ramp() {
 	rp_GenFreq(RAMP_PIN, 10000.0);
 }
 
-/* Configure the PWM_PIN as an output */
+/* Configure the FIRE_CONTROL_PIN as an input */
 void configure_fire_control() {
 	rp_DpinSetDirection(FIRE_CONTROL_PIN, RP_IN);
 }
@@ -63,7 +62,7 @@ void configure_ADC() {
 #endif
 
 	/*acquisition trigger delay and level activation*/
-	rp_AcqSetTriggerLevel(0.1); //Trig level is set in Volts while in SCPI 
+	rp_AcqSetTriggerLevel(0.1); //Trig level is set in Volts while in SCPI
         rp_AcqSetTriggerDelay(7000);
 
 	/*start acquisition must be set before trigger initiation*/
