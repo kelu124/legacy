@@ -17,16 +17,15 @@ CFLAGS = -g -O2 -std=gnu99 -Wall -Werror
 
 #Objects
 OBJECTS	= implementer.o control.o common.o tcp.o processing.o
-TORGET ?= implementation.o
 TARGET ?= implementation
 
 #Build the executable
 all: $(TARGET)
 
-$(TARGET): $(TORGET) $(OBJECTS)
+$(TARGET): $(TARGET).o $(OBJECTS)
 	$(CC) -o $@ $^ $(CFLAGS) $(RP_LIB_INCLUDE)
 
-$(TORGET): srcbin/$(TARGET).c
+$(TARGET).o: srcbin/$(TARGET).c
 	$(CC) -c $(CFLAGS) $(RP_PATH_INCLUDE) $< -o $@
 
 %.o: srclib/%.c

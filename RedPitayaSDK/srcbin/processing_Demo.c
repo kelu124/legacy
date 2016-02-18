@@ -2,7 +2,7 @@
 
 int main() {
 	/* Variable Declaration and Initialization */
-	int i = 0;
+	int i = 0, j = 0;
 	float *buffer = NULL;
 	char *pixel_buffer = NULL;
 
@@ -16,22 +16,17 @@ int main() {
 	if((pixel_buffer = malloc((BUFFER_SIZE) * sizeof(char))) == NULL)
 		exit(-1);
 #endif
+	for(i = 0; i < BUFFER_SIZE; i++)
+		buffer[j] = 66.2;
 
-	/* Initialization */
-	init();
-
-	/* Main routine */
-	for(i = 0; i < 2000; i++) {
-	//while(1){
-		routine(buffer, pixel_buffer);
-	}
+	/* Convert the floats in char */
+	pixel_buffer = calcul_pixel(buffer, pixel_buffer);
+	/* We should have a string like "BBB...BBB */
+	fprintf(stdout, "%s", pixel_buffer);
 
 	/* RP and Variables Release */
 	free(pixel_buffer);
 	free(buffer);
-
-	/* End everything */
-	end();
 
 	return EXIT_SUCCESS;
 }

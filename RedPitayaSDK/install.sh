@@ -25,12 +25,12 @@ sudo tar xvf $LINARO_HF_TAR
 LINARO_HF_SUB=$(echo $LINARO_HF_TAR | sed -e 's/.tar.xz//')
 
 echo -e "CREATING LINARO ROOT DIRECTORIES..."
-cd /opt; sudo mkdir -p linaro; 
+cd /opt; sudo mkdir -p linaro;
 cd -
 echo -e "COPYING DATA..."
 sudo cp -r $LINARO_HF_SUB/* /opt/linaro
 sudo rm -rf $LINARO_HF_SUB
-sudo rm -rf $LINARO_HF_DL 
+sudo rm -rf $LINARO_HF_DL
 
 #Seting seassion environment
 echo -e "\nSETTING ENVIRONMENTAL VARIABLES..."
