@@ -47,7 +47,7 @@ void routine(float* buffer, char* pixel_buffer){
 	 * Calculate the Pixel
 	 * Send it to the TCP Server
 	***/
-	while(i < NB_TIR) {
+	while(i < NB_TIRS) {
 		/* Waiting for the firing command */
 		//while(!FIRE_CONTROL_PIN);
 		pulse(PULSE_PIN);
@@ -55,7 +55,7 @@ void routine(float* buffer, char* pixel_buffer){
 		ramp(RAMP_PIN);
 		usleep(100);
 		//buffer = acquireADC(BUFFER_SIZE, buffer);
-		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
+		pixel_buffer = calcul_pixel(buffer, pixel_buffer);
 		pthread_mutex_lock(&mutex);
 		fprintf(stdout, "%s", pixel_buffer);
 		sprintf(data_to_send, "%s", pixel_buffer);

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# This is a simple run and compile script. It copies the file 
+# This is a simple run and compile script. It copies the file
 # argv[0] to a specific Red Pitaya with IP argv[1]. It uses putty-tools,
-# installed with install.sh. 
+# installed with install.sh.
 
 #Global variables definition
 IP=$1
@@ -12,12 +12,12 @@ EXECUTABLE=$(echo $2 | sed -e 's/.c//')
 usage(){
   echo    "Usage: - Input argument 1: Red Pitaya IP address in form 192.168.1.100."
   echo -e "       - Input argument 2: File to be copied, compiled and ran on a redpitaya system.\n"
-  exit 1 
+  exit 1
 }
 
 #TODO: Add timestamp to redirect output
 timeStamp(){
-  exit 1  
+  exit 1
 }
 
 if [ $# -eq 0 ] || [ $# -gt 2 ]
@@ -26,11 +26,10 @@ if [ $# -eq 0 ] || [ $# -gt 2 ]
      usage
 fi
 
-#echo -e "\nEXECUTING RED PITAYA RUN SCRIPT..."
-#mkdir -p include
-#echo -e "\nCOPYING RED PITAYA INCLUDES..."
-#sshpass -p root scp -r root@$IP:/opt/redpitaya/lib/librp.so include
-#sshpass -p root scp -r root@$IP:/opt/redpitaya/include/redpitaya/rp.h include
+echo -e "\nEXECUTING RED PITAYA RUN SCRIPT..."
+echo -e "\nCOPYING RED PITAYA INCLUDES..."
+sshpass -p root scp -r root@$IP:/opt/redpitaya/lib/librp.so inc
+sshpass -p root scp -r root@$IP:/opt/redpitaya/include/redpitaya/rp.h inc
 
 echo -e "\nCOMPILING SOURCE FILE..."
 
