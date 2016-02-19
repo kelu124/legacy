@@ -1,8 +1,8 @@
-#include "../inc/implementer.h"
+#include "../inc/processing.h"
 
 int main() {
 	/* Variable Declaration and Initialization */
-	int i = 0, j = 0;
+	int i = 0;
 	float *buffer = NULL;
 	char *pixel_buffer = NULL;
 
@@ -17,7 +17,7 @@ int main() {
 		exit(-1);
 #endif
 	for(i = 0; i < BUFFER_SIZE; i++)
-		buffer[j] = 66.2;
+		buffer[i] = 0.26;
 
 	/* Convert the floats in char */
 	pixel_buffer = calcul_pixel(buffer, pixel_buffer);

@@ -14,11 +14,11 @@ char* calcul_pixel(float* buffer, char* pixel_tab) {
 		for(j = 0; j < PIXEL_SIZE; j++) {
 			total += buffer[i * PIXEL_SIZE + j];
 		}
-		pixel_tab[i] = total;
+		pixel_tab[i] = total*255;
 	}
 #elif(DECIMATE8)
 	for(i = 0; i < BUFFER_SIZE; i++) {
-		pixel_tab[i] = buffer[i];
+		pixel_tab[i] = buffer[i]*255;
 	}
 #endif
 
