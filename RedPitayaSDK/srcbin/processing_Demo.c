@@ -9,13 +9,8 @@ int main() {
 	/* Memory Allocation */
 	if((buffer = malloc(BUFFER_SIZE * sizeof(float))) == NULL)
 		exit(-1);
-#if(!DECIMATE8)
-	if((pixel_buffer = malloc((BUFFER_SIZE/PIXEL_SIZE) * sizeof(char))) == NULL)
+	if((pixel_buffer = malloc(PIXEL_BUFFER_SIZE * sizeof(char))) == NULL)
 		exit(-1);
-#elif(DECIMATE8)
-	if((pixel_buffer = malloc(BUFFER_SIZE * sizeof(char))) == NULL)
-		exit(-1);
-#endif
 	for(i = 0; i < BUFFER_SIZE; i++)
 		buffer[i] = 0.26;
 
