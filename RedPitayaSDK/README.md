@@ -36,7 +36,7 @@ This will install a few programs including the linaro hf compiler needed to comp
 ## Run program on RedPitaya from your local machine ##
 
 Connect to your RedPitaya as an Access Point.
-As far as we know, RedPitaya will have the static IP adress `REDPITAYA_IP` set to 192.168.1.100.
+As far as we know, RedPitaya will have the static IP adress `REDPITAYA_IP` set to 192.168.128.1
 If not, use your OS common tools to get its IP on your network.
 
 Suppose you want to run the `implementation`, then run the following command:

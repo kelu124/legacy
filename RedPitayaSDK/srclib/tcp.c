@@ -5,6 +5,14 @@ void init_tcp(){
 	pthread_cond_init(&new_data,NULL);
 	pthread_mutex_init(&mutex,NULL);
 
+#if(!DECIMATE8)
+	if((data_to_send = malloc(sizeof(int) + (1+BUFFER_SIZE/PIXEL_SIZE) * sizeof(char))) == NULL)
+		exit(-1);
+#elif(DECIMATE8)
+	if((data_to_send = malloc(sizeof(int) + (1+BUFFER_SIZE) * sizeof(char))) == NULL)
+		exit(-1);
+#endif
+
 	/* Launch the UDP protocol */
 	pthread_create(&tcp_server_thread, NULL, tcp_server, NULL);
 }
@@ -13,6 +21,7 @@ void init_tcp(){
 void end_tcp() {
 	pthread_cond_destroy(&new_data);
     	pthread_mutex_destroy(&mutex);
+	free(data_to_send);
 }
 
 /* Initialize the Server */

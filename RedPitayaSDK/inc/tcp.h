@@ -22,6 +22,7 @@ typedef int SOCKET;
 pthread_t tcp_server_thread;
 pthread_cond_t new_data;
 pthread_mutex_t mutex;
+char *data_to_send;
 
 /* The function setting TCP up */
 void init_tcp();

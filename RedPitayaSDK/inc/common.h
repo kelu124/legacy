@@ -15,6 +15,5 @@
 
 /*** Global Variables ***/
 extern int stop;
-char *data_to_send;
 
 #endif

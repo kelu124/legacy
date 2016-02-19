@@ -7,18 +7,17 @@ int main() {
 
 	/* Memory Allocation */
 #if(!DECIMATE8)
-	if((pixel_buffer = malloc(sizeof(int) + (BUFFER_SIZE/PIXEL_SIZE) * sizeof(char))) == NULL)
+	if((pixel_buffer = malloc((BUFFER_SIZE/PIXEL_SIZE) * sizeof(char))) == NULL)
 		exit(-1);
 	for (i = 0; i < BUFFER_SIZE/PIXEL_SIZE; i++) {
-		pixel_buffer[i+1] = 66;
+		pixel_buffer[i] = 66;
 	}
 #elif(DECIMATE8)
-	if((pixel_buffer = malloc(sizeof(int) + BUFFER_SIZE * sizeof(char))) == NULL)
+	if((pixel_buffer = malloc(BUFFER_SIZE * sizeof(char))) == NULL)
 		exit(-1);
 	for(i = 0; i < BUFFER_SIZE; i++)
-		pixel_buffer[i+1] = 66;
+		pixel_buffer[i] = 66;
 #endif
-	pixel_buffer[0] = 2;
 
 	/* Initialization */
 	init_tcp();
@@ -26,7 +25,7 @@ int main() {
 	/* Main routine */
 	for(i = 0; i < 2000; i++) {
 		pthread_mutex_lock(&mutex);
-		sprintf(data_to_send, "%s", pixel_buffer);
+		sprintf(data_to_send, "%d %s", i, pixel_buffer);
 		pthread_cond_signal(&new_data);
 		pthread_mutex_unlock(&mutex);
 	}

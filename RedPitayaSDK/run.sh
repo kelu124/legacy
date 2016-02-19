@@ -7,7 +7,7 @@
 #Global variables definition
 IP=$1
 REDIRECT='/var/log/sdk_log/debug'
-EXECUTABLE=$(echo $2 | sed -e 's/.c//')
+EXECUTABLE=$(echo $2)
 
 usage(){
   echo    "Usage: - Input argument 1: Red Pitaya IP address in form 192.168.1.100."
@@ -28,8 +28,8 @@ fi
 
 echo -e "\nEXECUTING RED PITAYA RUN SCRIPT..."
 echo -e "\nCOPYING RED PITAYA INCLUDES..."
-sshpass -p root scp -r root@$IP:/opt/redpitaya/lib/librp.so inc
-sshpass -p root scp -r root@$IP:/opt/redpitaya/include/redpitaya/rp.h inc
+#sshpass -p root scp -r root@$IP:/opt/redpitaya/lib/librp.so inc
+#sshpass -p root scp -r root@$IP:/opt/redpitaya/include/redpitaya/rp.h inc
 
 echo -e "\nCOMPILING SOURCE FILE..."
 
