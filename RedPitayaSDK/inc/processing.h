@@ -6,6 +6,6 @@
 #include "common.h"
 
 /* The function calculating the pixels */
-char* calcul_pixel(float* buffer, char* pixel_tab);
+char* calcul_pixel(float* buffer, int position, char* pixel_tab);
 
 #endif

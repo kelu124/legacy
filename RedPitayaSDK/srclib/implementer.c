@@ -55,7 +55,7 @@ void routine(float* buffer, char* pixel_buffer){
 		ramp(RAMP_PIN);
 		usleep(100);
 		//buffer = acquireADC(BUFFER_SIZE, buffer);
-		pixel_buffer = calcul_pixel(buffer, pixel_buffer);
+		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
 		pthread_mutex_lock(&mutex);
 		fprintf(stdout, "%s", pixel_buffer);
 		sprintf(data_to_send, "%s", pixel_buffer);
