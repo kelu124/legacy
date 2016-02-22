@@ -2,7 +2,7 @@
 
 int main() {
 	/* Variable Declaration and Initialization */
-	int i = 0;
+	int i = 0, j = 0;
 	char *pixel_buffer = NULL;
 
 	/* Memory Allocation */
@@ -15,12 +15,13 @@ int main() {
 	init_tcp();
 
 	/* Main routine */
-	for(i = 0; i < 2000; i++) {
-		pthread_mutex_lock(&mutex);
-		sprintf(data_to_send, "%d %s", i, pixel_buffer);
-		pthread_cond_signal(&new_data);
-		pthread_mutex_unlock(&mutex);
-	}
+	for(j = 0; j < 10000; j++)
+		for(i = 0; i < NB_TIRS; i++) {
+			pthread_mutex_lock(&mutex);
+			sprintf(data_to_send, "%s", pixel_buffer);
+			pthread_cond_signal(&new_data);
+			pthread_mutex_unlock(&mutex);
+		}
 
 	/* RP and Variables Release */
 	free(pixel_buffer);

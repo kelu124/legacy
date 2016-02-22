@@ -6,8 +6,6 @@
 #include "tcp.h"
 #include "processing.h"
 
-#define NB_TIRS 128
-
 int stop;
 
 /* The function setting everything up, calling all the init_X functions */

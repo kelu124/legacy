@@ -20,7 +20,8 @@
 #define PIXEL_SIZE 1
 #endif
 
-/*** Final Configuration Step ***/
-#define PIXEL_BUFFER_SIZE BUFFER_SIZE/PIXEL_SIZE
+/*** Final Global Variables ***/
+#define PIXEL_BUFFER_SIZE (BUFFER_SIZE/PIXEL_SIZE)+1
+#define NB_TIRS 128
 
 #endif

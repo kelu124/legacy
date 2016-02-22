@@ -15,9 +15,9 @@ int main() {
 		buffer[i] = 0.26;
 
 	/* Convert the floats in char */
-	pixel_buffer = calcul_pixel(buffer, pixel_buffer);
-	/* We should have a string like "12 BBB...BBB */
-	fprintf(stdout, "%d %s\n", 12, pixel_buffer);
+	pixel_buffer = calcul_pixel(buffer, 65, pixel_buffer);
+	/* We should have a string like "ABBB...BBB */
+	fprintf(stdout, "%s\n", pixel_buffer);
 
 	/* RP and Variables Release */
 	free(pixel_buffer);

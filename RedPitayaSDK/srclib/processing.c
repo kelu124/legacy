@@ -1,7 +1,7 @@
 #include "../inc/processing.h"
 
 /* Calculate the Pixel */
-char* calcul_pixel(float* buffer, char* pixel_tab) {
+char* calcul_pixel(float* buffer, int position, char* pixel_tab) {
 	int i = 0;
 
 #if(!DECIMATE8)
@@ -13,13 +13,15 @@ char* calcul_pixel(float* buffer, char* pixel_tab) {
 		for(j = 0; j < PIXEL_SIZE; j++) {
 			total += buffer[i * PIXEL_SIZE + j];
 		}
-		pixel_tab[i] = total*255;
+		pixel_tab[i+1] = total*255;
 	}
 #elif(DECIMATE8)
 	for(i = 0; i < PIXEL_BUFFER_SIZE; i++) {
-		pixel_tab[i] = buffer[i]*255;
+		pixel_tab[i+1] = buffer[i]*255;
 	}
 #endif
+
+	pixel_tab[0] = position;
 
 	return(pixel_tab);
 }
