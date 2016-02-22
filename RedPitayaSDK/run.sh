@@ -7,7 +7,7 @@
 #Global variables definition
 IP=$1
 REDIRECT='/var/log/sdk_log/debug'
-EXECUTABLE=$(echo $2 | sed -e 's/.c//')
+EXECUTABLE=$(echo $2)
 
 usage(){
   echo    "Usage: - Input argument 1: Red Pitaya IP address in form 192.168.1.100."
@@ -27,9 +27,19 @@ if [ $# -eq 0 ] || [ $# -gt 2 ]
 fi
 
 echo -e "\nEXECUTING RED PITAYA RUN SCRIPT..."
-echo -e "\nCOPYING RED PITAYA INCLUDES..."
-sshpass -p root scp -r root@$IP:/opt/redpitaya/lib/librp.so inc
-sshpass -p root scp -r root@$IP:/opt/redpitaya/include/redpitaya/rp.h inc
+echo -e "\nCOPYING RED PITAYA INCLUDES IF NECESSARY..."
+if [ -f "./inc/librp.so" ];then
+	echo "./inc/librp.so does exists. Not copying."
+else
+	echo "./inc/librp.so does exists. Copying..."
+	sshpass -p root scp -r root@$IP:/opt/redpitaya/lib/librp.so inc
+fi
+if [ -f "./inc/rp.h" ];then
+	echo "./inc/rp.h does exists. Not copying."
+else
+	echo "./inc/rp.h does not exists. Copying..."
+	sshpass -p root scp -r root@$IP:/opt/redpitaya/include/redpitaya/rp.h inc;
+fi
 
 echo -e "\nCOMPILING SOURCE FILE..."
 

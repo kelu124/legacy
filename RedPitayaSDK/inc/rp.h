@@ -212,7 +212,7 @@ typedef enum {
     RP_TRIG_SRC_CHB_PE,   //!< Trigger set to Channel B threshold positive edge
     RP_TRIG_SRC_CHB_NE,   //!< Trigger set to Channel B threshold negative edge
     RP_TRIG_SRC_EXT_PE,   //!< Trigger set to external trigger positive edge (DIO0_P pin)
-    RP_TRIG_SRC_EXT_NE,   //!< Trigger set to external trigger negative edge (DIO0_N pin)
+    RP_TRIG_SRC_EXT_NE,   //!< Trigger set to external trigger negative edge (DIO0_P pin)
     RP_TRIG_SRC_AWG_PE,   //!< Trigger set to arbitrary wave generator application positive edge
     RP_TRIG_SRC_AWG_NE    //!< Trigger set to arbitrary wave generator application negative edge
 } rp_acq_trig_src_t;

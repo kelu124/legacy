@@ -8,14 +8,6 @@ void init() {
 		exit(EXIT_FAILURE);
 	}
 
-#if(!DECIMATE8)
-	if((data_to_send = malloc(sizeof(float)+(1+BUFFER_SIZE/PIXEL_SIZE)*sizeof(char))) == NULL)
-		exit(-1);
-#elif(DECIMATE8)
-	if((data_to_send = malloc(sizeof(float)+(1+BUFFER_SIZE)*sizeof(char))) == NULL)
-		exit(-1);
-#endif
-
 	init_control();
 	init_tcp();
 
@@ -28,7 +20,6 @@ void end(){
 
 	end_control();
 	end_tcp();
-	free(data_to_send);
 	rp_Release();
 }
 
@@ -36,7 +27,7 @@ void end(){
 void routine(float* buffer, char* pixel_buffer){
 	int i = 0, j = 0;
 	for(j = 0; j < BUFFER_SIZE; j++)
-		buffer[j] = 2.34;
+		buffer[j] = 0.33;
 
 	/***
 	 * For each shot:
@@ -55,9 +46,8 @@ void routine(float* buffer, char* pixel_buffer){
 		ramp(RAMP_PIN);
 		usleep(100);
 		//buffer = acquireADC(BUFFER_SIZE, buffer);
-		pixel_buffer = calcul_pixel(buffer, pixel_buffer);
+		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
 		pthread_mutex_lock(&mutex);
-		fprintf(stdout, "%s", pixel_buffer);
 		sprintf(data_to_send, "%s", pixel_buffer);
 		pthread_cond_signal(&new_data);
 		pthread_mutex_unlock(&mutex);

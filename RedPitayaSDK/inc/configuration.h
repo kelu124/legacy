@@ -17,6 +17,11 @@
 #define PIXEL_SIZE 8
 #elif(DECIMATE8)
 #define BUFFER_SIZE 2048
+#define PIXEL_SIZE 1
 #endif
+
+/*** Final Global Variables ***/
+#define PIXEL_BUFFER_SIZE (BUFFER_SIZE/PIXEL_SIZE)+1
+#define NB_TIRS 128
 
 #endif
