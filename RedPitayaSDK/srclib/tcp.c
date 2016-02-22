@@ -30,14 +30,15 @@ int init_connection(void) {
 		exit(errno);
 	}
 
+	sin.sin_family = AF_INET;
 	sin.sin_addr.s_addr = INADDR_ANY;
 	sin.sin_port = htons(PORT);
-	sin.sin_family = AF_INET;
 
 	if(bind(sock,(SOCKADDR *) &sin, sizeof sin) == SOCKET_ERROR) {
 		perror("bind()");
 		exit(errno);
 	}
+
 	listen(sock, MAX_CLIENTS);
 
 	return sock;
@@ -59,19 +60,20 @@ void *tcp_server (void *p_data) {
 	SOCKET sock = init_connection();
 	client_length = sizeof(client_addr);
 
+	client_sock = accept(sock, (SOCKADDR *)&client_addr, &client_length);
+	if(client_sock == SOCKET_ERROR) {
+		perror("accept()");
+		exit(errno);
+	}
+
 	while(!stop){
-		client_sock = accept(sock, (SOCKADDR *)&client_addr, &client_length);
-		if(client_sock == SOCKET_ERROR) {
-			perror("accept()");
-			exit(errno);
-		}
 		pthread_mutex_lock(&mutex);
 		pthread_cond_wait(&new_data, &mutex);
 		send_data(data_to_send, client_sock);
 		pthread_mutex_unlock(&mutex);
-		close(client_sock);
 	}
 
+	close(client_sock);
 	end_connection(sock);
 
 	pthread_exit(NULL);
