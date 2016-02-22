@@ -7,9 +7,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+#include <sys/uio.h>
+#include <arpa/inet.h>
+
 #include "common.h"
 
-#define IPHOST "192.168.1.36"
 #define PORT 7538   //The port on which to listen for incoming data
 #define MAX_CLIENTS 1
 #define INVALID_SOCKET -1
