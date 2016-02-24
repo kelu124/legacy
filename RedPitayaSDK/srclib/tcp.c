@@ -56,33 +56,44 @@ void *tcp_server (void *p_data) {
 	SOCKET client_sock;
 	SOCKADDR_IN client_addr;
 	socklen_t client_length;
+	int sendingFlag = 0;
+	pid_t pid;
 
 	SOCKET sock = init_connection();
 	client_length = sizeof(client_addr);
 
-	client_sock = accept(sock, (SOCKADDR *)&client_addr, &client_length);
-	if(client_sock == SOCKET_ERROR) {
-		perror("accept()");
-		exit(errno);
-	}
+	while(!stop) {
+		client_sock = accept(sock, (SOCKADDR *)&client_addr, &client_length);
+		if(client_sock == SOCKET_ERROR) {
+			perror("accept()");
+			exit(errno);
+		}
 
-	while(!stop){
-		pthread_mutex_lock(&mutex);
-		pthread_cond_wait(&new_data, &mutex);
-		send_data(data_to_send, client_sock);
-		pthread_mutex_unlock(&mutex);
+		pid=fork();
+		if(!pid) {
+			while(!stop){
+				pthread_mutex_lock(&mutex);
+				pthread_cond_wait(&new_data, &mutex);
+				sendingFlag = send_data(data_to_send, client_sock);
+				pthread_mutex_unlock(&mutex);
+				if(sendingFlag < 0)
+					break;
+			}
+			close(client_sock);
+			exit(0);
+		}
+		close(client_sock);
 	}
-
-	close(client_sock);
 	end_connection(sock);
 
 	pthread_exit(NULL);
 }
 
 /* Send the datas through the TCP Server */
-void send_data(char* data_to_send, SOCKET client_sock) {
+int send_data(char* data_to_send, SOCKET client_sock) {
 	int n;
 	n = write(client_sock, data_to_send, strlen(data_to_send));
 	if (n < 0)
-		perror("ERROR writing to socket");
+		return(-1);
+	return(0);
 }
