@@ -14,6 +14,8 @@ void init_tcp(){
 
 /* End everything (Stop Acquisition, motor and RP resources) */
 void end_tcp() {
+//	pthread_cancel(tcp_server_thread);
+	pthread_join(tcp_server_thread, NULL);
 	pthread_cond_destroy(&new_data);
     	pthread_mutex_destroy(&mutex);
 	free(data_to_send);
@@ -52,38 +54,53 @@ void end_connection(int sock) {
 /* Control the TCP Server */
 void *tcp_server (void *p_data) {
 	/* Render this Thread autonomous */
-	pthread_detach(pthread_self());
+//	pthread_detach(pthread_self());
 	SOCKET client_sock;
 	SOCKADDR_IN client_addr;
 	socklen_t client_length;
-	int sendingFlag = 0;
-	pid_t pid;
+	int sending_flag;
+//	pid_t pid;
+
+	fprintf(stdout, "Server launched, waiting for connection...\n");
+	fflush(stdout);
 
 	SOCKET sock = init_connection();
 	client_length = sizeof(client_addr);
 
 	while(!stop) {
+		sending_flag = 0;
 		client_sock = accept(sock, (SOCKADDR *)&client_addr, &client_length);
 		if(client_sock == SOCKET_ERROR) {
 			perror("accept()");
 			exit(errno);
 		}
 
-		pid=fork();
+		fprintf(stdout, "New Client is connected\n");
+		fflush(stdout);
+
+/*		pid=fork();
 		if(!pid) {
-			while(!stop){
+			*/while(!stop && !sending_flag){
 				pthread_mutex_lock(&mutex);
 				pthread_cond_wait(&new_data, &mutex);
-				sendingFlag = send_data(data_to_send, client_sock);
+
+				sending_flag = send_data(data_to_send, client_sock);
+//				fprintf(stdout, "Data sent\n");
 				pthread_mutex_unlock(&mutex);
-				if(sendingFlag < 0)
-					break;
 			}
+/*			fprintf(stdout, "Child closed its socket\n");
+			fflush(stdout);
 			close(client_sock);
 			exit(0);
 		}
+*/
+		fprintf(stdout, "Client is disconnected\n");
+		fflush(stdout);
 		close(client_sock);
 	}
+
+	fprintf(stdout, "Server is now down\n");
+	fflush(stdout);
 	end_connection(sock);
 
 	pthread_exit(NULL);
