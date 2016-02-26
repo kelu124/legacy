@@ -14,8 +14,8 @@ void init_tcp(){
 
 /* End everything (Stop Acquisition, motor and RP resources) */
 void end_tcp() {
-//	pthread_cancel(tcp_server_thread);
-	pthread_join(tcp_server_thread, NULL);
+	pthread_cancel(tcp_server_thread);
+//	pthread_join(tcp_server_thread, NULL);
 	pthread_cond_destroy(&new_data);
     	pthread_mutex_destroy(&mutex);
 	free(data_to_send);

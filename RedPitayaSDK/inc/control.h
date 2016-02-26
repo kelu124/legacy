@@ -5,12 +5,8 @@
 
 /* Define the Pin for signals and acquisitions and the size of the buffer */
 #define PULSE_PIN RP_DIO1_P
-#define FIRE_CONTROL_PIN RP_DIO2_P
 #define ACQUISITION_PIN RP_CH_1
 #define RAMP_PIN RP_CH_2
-#if(EXTERNAL_TRIGGER)
-#define TRIGGER_SOURCE RP_DIO3_P
-#endif
 
 /* Mandatory variable which represent the trigger state */
 rp_acq_trig_state_t state;
@@ -26,9 +22,6 @@ void reset();
 
 /* The function configuring the ramp used for controlling the TGC */
 void configure_ramp();
-
-/* The function configuring the Pin used for controlling the firing */
-void configure_fire_control();
 
 /* The function configuring the pulse used for controlling the Pulse */
 void configure_pulse();

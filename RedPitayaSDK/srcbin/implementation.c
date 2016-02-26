@@ -2,7 +2,7 @@
 
 int main() {
 	/* Variable Declaration and Initialization */
-	int i = 0;
+//	int i = 0;
 	float *buffer = NULL;
 	char *pixel_buffer = NULL;
 
@@ -16,17 +16,17 @@ int main() {
 	init();
 
 	/* Main routine */
-	for(i = 0; i < 2000; i++) {
+//	for(i = 0; i < 2000; i++) {
 	//while(1){
 		routine(buffer, pixel_buffer);
-	}
+//	}
+
+	/* End everything */
+	end();
 
 	/* RP and Variables Release */
 	free(pixel_buffer);
 	free(buffer);
-
-	/* End everything */
-	end();
 
 	return EXIT_SUCCESS;
 }

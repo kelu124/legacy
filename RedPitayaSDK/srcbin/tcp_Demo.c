@@ -10,8 +10,9 @@ int main() {
 	if((pixel_buffer = malloc(PIXEL_BUFFER_SIZE * sizeof(char))) == NULL)
 		exit(-1);
 
+
 	for(i = 0; i < PIXEL_BUFFER_SIZE; i++)
-		pixel_buffer[i] = 83;
+		pixel_buffer[i] = 120;
 
 	/* Initialization */
 	init_tcp();
