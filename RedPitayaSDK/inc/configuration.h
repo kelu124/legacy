@@ -9,13 +9,14 @@
 
 /*** Pre-compiling Options ***/
 #define DECIMATE8 ON
-#define EXTERNAL_TRIGGER OFF
+#define EXTERNAL_TRIGGER ON
 
 /*** Global Variables impacted by the options ***/
 #if(!DECIMATE8)
 #define BUFFER_SIZE 16384
-#define PIXEL_SIZE 8
+#define PIXEL_SIZE 4
 #elif(DECIMATE8)
+//#define BUFFER_SIZE 4096
 #define BUFFER_SIZE 2048
 #define PIXEL_SIZE 1
 #endif

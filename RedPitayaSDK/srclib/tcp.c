@@ -14,6 +14,7 @@ void init_tcp(){
 
 /* End everything (Stop Acquisition, motor and RP resources) */
 void end_tcp() {
+	pthread_cancel(tcp_server_thread);
 	pthread_cond_destroy(&new_data);
     	pthread_mutex_destroy(&mutex);
 	free(data_to_send);
@@ -52,37 +53,62 @@ void end_connection(int sock) {
 /* Control the TCP Server */
 void *tcp_server (void *p_data) {
 	/* Render this Thread autonomous */
-	pthread_detach(pthread_self());
 	SOCKET client_sock;
 	SOCKADDR_IN client_addr;
 	socklen_t client_length;
+	int sending_flag;
+//	pid_t pid;
+
+	fprintf(stdout, "Server launched, waiting for connection...\n");
+	fflush(stdout);
 
 	SOCKET sock = init_connection();
 	client_length = sizeof(client_addr);
 
-	client_sock = accept(sock, (SOCKADDR *)&client_addr, &client_length);
-	if(client_sock == SOCKET_ERROR) {
-		perror("accept()");
-		exit(errno);
+	while(!stop) {
+		sending_flag = 0;
+		client_sock = accept(sock, (SOCKADDR *)&client_addr, &client_length);
+		if(client_sock == SOCKET_ERROR) {
+			perror("accept()");
+			exit(errno);
+		}
+
+		fprintf(stdout, "New Client is connected\n");
+		fflush(stdout);
+
+/*		pid=fork();
+		if(!pid) {
+			*/while(!stop && !sending_flag){
+				pthread_mutex_lock(&mutex);
+				pthread_cond_wait(&new_data, &mutex);
+
+				sending_flag = send_data(data_to_send, client_sock);
+//				fprintf(stdout, "Data sent\n");
+				pthread_mutex_unlock(&mutex);
+			}
+/*			fprintf(stdout, "Child closed its socket\n");
+			fflush(stdout);
+			close(client_sock);
+			exit(0);
+		}
+*/
+		fprintf(stdout, "Client is disconnected\n");
+		fflush(stdout);
+		close(client_sock);
 	}
 
-	while(!stop){
-		pthread_mutex_lock(&mutex);
-		pthread_cond_wait(&new_data, &mutex);
-		send_data(data_to_send, client_sock);
-		pthread_mutex_unlock(&mutex);
-	}
-
-	close(client_sock);
+	fprintf(stdout, "Server is now down\n");
+	fflush(stdout);
 	end_connection(sock);
 
 	pthread_exit(NULL);
 }
 
 /* Send the datas through the TCP Server */
-void send_data(char* data_to_send, SOCKET client_sock) {
+int send_data(char* data_to_send, SOCKET client_sock) {
 	int n;
 	n = write(client_sock, data_to_send, strlen(data_to_send));
 	if (n < 0)
-		perror("ERROR writing to socket");
+		return(-1);
+	return(0);
 }

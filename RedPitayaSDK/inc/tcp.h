@@ -7,9 +7,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-#include <sys/uio.h>
-#include <arpa/inet.h>
-
 #include "common.h"
 
 #define PORT 7538   //The port on which to listen for incoming data
@@ -42,6 +39,6 @@ void end_connection(int sock);
 void *tcp_server (void *p_data);
 
 /* The function sending the datas through the TCP Server */
-void send_data(char* data_to_send, SOCKET client_sock);
+int send_data(char* data_to_send, SOCKET client_sock);
 
 #endif

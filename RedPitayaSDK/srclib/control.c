@@ -5,17 +5,12 @@ void init_control(){
 	/* Configuration */
 	configure_pulse();
 	configure_ramp();
-	configure_fire_control();
 	configure_ADC();
 }
 
 /* End everything (Stop Acquisition, motor and RP resources) */
 void end_control() {
-#if(EXTERNAL_TRIGGER)
-	rp_DpinSetState(TRIGGER_SOURCE, RP_LOW);
-#endif
 	rp_DpinSetState(PULSE_PIN, RP_LOW);
-	rp_DpinSetState(FIRE_CONTROL_PIN, RP_LOW);
 	rp_AcqStop();
 }
 
@@ -36,16 +31,8 @@ void configure_ramp() {
 	rp_GenFreq(RAMP_PIN, 10000.0);
 }
 
-/* Configure the FIRE_CONTROL_PIN as an input */
-void configure_fire_control() {
-	rp_DpinSetDirection(FIRE_CONTROL_PIN, RP_IN);
-}
-
 /* Configure the PULSE_PIN as an output */
 void configure_pulse() {
-#if(EXTERNAL_TRIGGER)
-	rp_DpinSetDirection(TRIGGER_SOURCE, RP_OUT);
-#endif
 	rp_DpinSetDirection(PULSE_PIN, RP_OUT);
 }
 
@@ -62,7 +49,7 @@ void configure_ADC() {
 #endif
 
 	/*acquisition trigger delay and level activation*/
-	rp_AcqSetTriggerLevel(0.1); //Trig level is set in Volts while in SCPI
+	rp_AcqSetTriggerLevel(0.01); //Trig level is set in Volts while in SCPI
         rp_AcqSetTriggerDelay(7000);
 
 	/*start acquisition must be set before trigger initiation*/
@@ -90,9 +77,6 @@ void ramp(rp_channel_t channel) {
 
 /* Acquire one ray with the ADC */
 float* acquireADC(uint32_t buff_size, float* temp) {
-#if(EXTERNAL_TRIGGER)
-	pulse(TRIGGER_SOURCE);
-#endif
 	/*waiting for trigger*/
 	while(1){
 		rp_AcqGetTriggerState(&state);
@@ -101,8 +85,11 @@ float* acquireADC(uint32_t buff_size, float* temp) {
 		}
 	}
 
+	ramp(RAMP_PIN);
 	/*put acquisition data in the temporary buffer*/
 	rp_AcqGetOldestDataV(ACQUISITION_PIN, &buff_size, temp);
+
+	configure_ADC();
 
 	return(temp);
 }

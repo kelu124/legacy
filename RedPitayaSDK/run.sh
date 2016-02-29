@@ -53,8 +53,8 @@ sshpass -p root ssh root@$IP 'mkdir -p /var/log/sdk_log'
 sshpass -p root ssh root@$IP 'touch /var/log/sdk_log/debug'
 
 #Copying executable file to red pitaya
-echo -e "EXECUTING REMOTE FILE..."
-echo -e "OUTPUT: \n----------"
+echo -e "\nEXECUTING REMOTE FILE..."
+echo -e "\nOUTPUT: \n----------"
 sshpass -p root scp $PWD/$EXECUTABLE root@$IP:/tmp
 sshpass -p root ssh root@$IP '/tmp/'$EXECUTABLE' | tee '$REDIRECT
 
