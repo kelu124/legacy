@@ -51,7 +51,6 @@ void configure_ADC() {
 	/*acquisition trigger delay and level activation*/
 	rp_AcqSetTriggerLevel(0.01); //Trig level is set in Volts while in SCPI
         rp_AcqSetTriggerDelay(7000);
-//        rp_AcqSetTriggerDelay(0);
 
 	/*start acquisition must be set before trigger initiation*/
 	rp_AcqStart();

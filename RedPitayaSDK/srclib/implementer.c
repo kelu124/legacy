@@ -9,7 +9,7 @@ void init() {
 	}
 
 	init_control();
-//	init_tcp();
+	init_tcp();
 
 	stop = 0;
 }
@@ -19,13 +19,14 @@ void end(){
 	stop = 1;
 
 	end_control();
-//	end_tcp();
+	end_tcp();
 	rp_Release();
 }
 
 /* Main routine */
 void routine(float* buffer, char* pixel_buffer){
-	int i = 0;//, j = 0;
+	int i = 0;
+//	int j = 0;
 /*	for(j = 0; j < BUFFER_SIZE; j++)
 		buffer[j] = 0.33;*/
 
@@ -49,15 +50,14 @@ void routine(float* buffer, char* pixel_buffer){
 		buffer = acquireADC(BUFFER_SIZE, buffer);
 /*		for(j = 0; j < BUFFER_SIZE; j++)
 			fprintf(file, "%f\n", buffer[j]);*/
-//		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
-//		pthread_mutex_lock(&mutex);
-//		sprintf(data_to_send, "%s", pixel_buffer);
+		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
+		pthread_mutex_lock(&mutex);
+		sprintf(data_to_send, "%s", pixel_buffer);
 //		fprintf(file, "%s\n", pixel_buffer);
-//		fprintf(stdout, "%s\n", pixel_buffer);
 //		fflush(file);
-//		pthread_cond_signal(&new_data);
-//		pthread_mutex_unlock(&mutex);
-//		j++;
+		pthread_cond_signal(&new_data);
+		pthread_mutex_unlock(&mutex);
+		i++;
 	}
 
 //	fclose(file);

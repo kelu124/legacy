@@ -16,10 +16,10 @@ int main() {
 	init();
 
 	/* Main routine */
-//	for(i = 0; i < 2000; i++) {
+	for(i = 0; i < 2000; i++) {
 	//while(1){
 		routine(buffer, pixel_buffer);
-//	}
+	}
 
 	/* End everything */
 	end();

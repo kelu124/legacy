@@ -15,7 +15,6 @@ void init_tcp(){
 /* End everything (Stop Acquisition, motor and RP resources) */
 void end_tcp() {
 	pthread_cancel(tcp_server_thread);
-//	pthread_join(tcp_server_thread, NULL);
 	pthread_cond_destroy(&new_data);
     	pthread_mutex_destroy(&mutex);
 	free(data_to_send);
@@ -54,7 +53,6 @@ void end_connection(int sock) {
 /* Control the TCP Server */
 void *tcp_server (void *p_data) {
 	/* Render this Thread autonomous */
-//	pthread_detach(pthread_self());
 	SOCKET client_sock;
 	SOCKADDR_IN client_addr;
 	socklen_t client_length;
