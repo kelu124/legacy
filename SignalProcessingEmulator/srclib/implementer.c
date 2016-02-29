@@ -9,6 +9,7 @@ void init() {
 	}
 
 	init_control();
+	init_transmition();
 
 	stop = 0;
 }
@@ -18,6 +19,7 @@ void end(){
 	stop = 1;
 
 	end_control();
+	end_transmition();
 	rp_Release();
 }
 
