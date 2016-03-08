@@ -9,7 +9,7 @@ void init() {
 	}
 
 	init_control();
-	init_tcp();
+	init_transmition();
 
 	stop = 0;
 }
@@ -19,18 +19,18 @@ void end(){
 	stop = 1;
 
 	end_control();
-	end_tcp();
+	end_transmition();
 	rp_Release();
 }
 
 /* Main routine */
 void routine(float* buffer, char* pixel_buffer){
 	int i = 0;
-	int j = 0;
-	for(j = 0; j < BUFFER_SIZE; j++)
-		buffer[j] = 0.33;
+//	int j = 0;
+/*	for(j = 0; j < BUFFER_SIZE; j++)
+		buffer[j] = 0.33;*/
 
-//	FILE* file = fopen("/tmp/capture_1_0.txt", "w");
+//	FILE* file = fopen("capture.txt", "w");
 
 	/***
 	 * For each shot:
@@ -41,23 +41,18 @@ void routine(float* buffer, char* pixel_buffer){
 	 * Calculate the Pixel
 	 * Send it to the TCP Server
 	***/
-	while(i < 10) {
+	while(i < NB_TIRS) {
 		/* Waiting for the firing command */
 /*		pulse(PULSE_PIN);
 		usleep(66);
 		ramp(RAMP_PIN);
 		usleep(100);*/
-/*		buffer = acquireADC(BUFFER_SIZE, buffer);
-		for(j = 0; j < BUFFER_SIZE; j++)
-			fprintf(file, "%f\n", buffer[j]);
-		fflush(file);*/
+		buffer = acquireADC(BUFFER_SIZE, buffer);
+/*		for(j = 0; j < BUFFER_SIZE; j++)
+			fprintf(file, "%f\n", buffer[j]);*/
 		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
-		pthread_mutex_lock(&mutex);
-		sprintf(data_to_send, "%s", pixel_buffer);
 //		fprintf(file, "%s\n", pixel_buffer);
 //		fflush(file);
-		pthread_cond_signal(&new_data);
-		pthread_mutex_unlock(&mutex);
 		i++;
 	}
 

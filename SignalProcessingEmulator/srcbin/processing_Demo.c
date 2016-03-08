@@ -1,8 +1,8 @@
-#include "../inc/implementer.h"
+#include "../inc/processing.h"
 
 int main() {
 	/* Variable Declaration and Initialization */
-//	int i = 0;
+	int i = 0;
 	float *buffer = NULL;
 	char *pixel_buffer = NULL;
 
@@ -11,18 +11,13 @@ int main() {
 		exit(-1);
 	if((pixel_buffer = malloc(PIXEL_BUFFER_SIZE * sizeof(char))) == NULL)
 		exit(-1);
+	for(i = 0; i < BUFFER_SIZE; i++)
+		buffer[i] = 0.26;
 
-	/* Initialization */
-	init();
-
-	/* Main routine */
-//	for(i = 0; i < 1; i++) {
-	//while(1){
-		routine(buffer, pixel_buffer);
-//	}
-
-	/* End everything */
-	end();
+	/* Convert the floats in char */
+	pixel_buffer = calcul_pixel(buffer, 65, pixel_buffer);
+	/* We should have a string like "ABBB...BBB */
+	fprintf(stdout, "%s\n", pixel_buffer);
 
 	/* RP and Variables Release */
 	free(pixel_buffer);

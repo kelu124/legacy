@@ -28,7 +28,7 @@ void configure_ramp() {
 	rp_GenMode(RAMP_PIN, RP_GEN_MODE_BURST);
 	rp_GenBurstCount(RAMP_PIN, 1);
 	rp_GenAmp(RAMP_PIN, 1.0);
-	rp_GenFreq(RAMP_PIN, 3846.15);
+	rp_GenFreq(RAMP_PIN, 10000.0);
 }
 
 /* Configure the PULSE_PIN as an output */
@@ -50,19 +50,7 @@ void configure_ADC() {
 
 	/*acquisition trigger delay and level activation*/
 	rp_AcqSetTriggerLevel(0.01); //Trig level is set in Volts while in SCPI
-//        rp_AcqSetTriggerDelay(9000);
-//        rp_AcqSetTriggerDelay(8000);
-//        rp_AcqSetTriggerDelay(7000);
-//        rp_AcqSetTriggerDelay(6000);
-//        rp_AcqSetTriggerDelay(5000);
-//        rp_AcqSetTriggerDelay(4000);
-//        rp_AcqSetTriggerDelay(3000);
-//        rp_AcqSetTriggerDelay(2500);
-//        rp_AcqSetTriggerDelay(2000);
-//        rp_AcqSetTriggerDelay(1500);
-//        rp_AcqSetTriggerDelay(1000);
-//        rp_AcqSetTriggerDelay(500);
-        rp_AcqSetTriggerDelay(0);
+        rp_AcqSetTriggerDelay(7000);
 
 	/*start acquisition must be set before trigger initiation*/
 	rp_AcqStart();
@@ -73,7 +61,7 @@ void configure_ADC() {
 #else
 	rp_AcqSetTriggerSrc(RP_TRIG_SRC_CHA_PE);
 #endif
-	state = RP_TRIG_STATE_WAITING;
+	state = RP_TRIG_STATE_TRIGGERED;
 }
 
 /* Generate a pulse */
@@ -89,14 +77,6 @@ void ramp(rp_channel_t channel) {
 
 /* Acquire one ray with the ADC */
 float* acquireADC(uint32_t buff_size, float* temp) {
-	/*trigger source, external, positif*/
-#if(EXTERNAL_TRIGGER)
-	rp_AcqSetTriggerSrc(RP_TRIG_SRC_EXT_PE);
-#else
-	rp_AcqSetTriggerSrc(RP_TRIG_SRC_CHA_PE);
-#endif
-	state = RP_TRIG_STATE_WAITING;
-
 	/*waiting for trigger*/
 	while(1){
 		rp_AcqGetTriggerState(&state);
@@ -108,6 +88,8 @@ float* acquireADC(uint32_t buff_size, float* temp) {
 	ramp(RAMP_PIN);
 	/*put acquisition data in the temporary buffer*/
 	rp_AcqGetOldestDataV(ACQUISITION_PIN, &buff_size, temp);
+
+	configure_ADC();
 
 	return(temp);
 }
