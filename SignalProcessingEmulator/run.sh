@@ -54,8 +54,12 @@ sshpass -p root ssh root@$IP 'touch /var/log/sdk_log/debug'
 
 #Copying executable file to red pitaya
 echo -e "\nEXECUTING REMOTE FILE..."
-echo -e "\nOUTPUT: \n----------"
 sshpass -p root scp $PWD/$EXECUTABLE root@$IP:/tmp
+#sshpass -p root scp -r $PWD/echopen root@$IP:/root
+#sshpass -p root ssh root@$IP 'cd /root/echopen;npm install | tee '$REDIRECT
+#sshpass -p root ssh root@$IP 'cd /root/echopen;bower install --allow-root | tee '$REDIRECT
+echo -e "\nOUTPUT: \n----------"
+#sshpass -p root ssh root@$IP 'node /root/echopen/server | tee '$REDIRECT
 sshpass -p root ssh root@$IP '/tmp/'$EXECUTABLE' | tee '$REDIRECT
 
 #make clean

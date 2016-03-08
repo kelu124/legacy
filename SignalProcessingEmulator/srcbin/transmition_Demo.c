@@ -16,6 +16,10 @@ int main() {
 	/* Initialization */
 	init_transmition();
 
+	pthread_mutex_lock(&mutex_configuration);
+	pthread_cond_wait(&arrived_configuration, &mutex_configuration);
+	pthread_mutex_unlock(&mutex_configuration);
+
 	/* Main routine */
 	for(j = 0; j < 1; j++) {
 		for(i = 0; i < NB_TIRS; i++) {

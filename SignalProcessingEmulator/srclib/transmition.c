@@ -4,6 +4,8 @@
 void init_transmition(){
 	pthread_cond_init(&new_data,NULL);
 	pthread_mutex_init(&mutex,NULL);
+	pthread_cond_init(&arrived_configuration,NULL);
+	pthread_mutex_init(&mutex_configuration,NULL);
 
 	if((data_to_send = malloc(PIXEL_BUFFER_SIZE * sizeof(char))) == NULL)
 		exit(-1);
@@ -51,25 +53,45 @@ void end_transmition() {
 	pthread_join(transmition_thread, NULL);
 	pthread_cond_destroy(&new_data);
     	pthread_mutex_destroy(&mutex);
+	pthread_cond_destroy(&arrived_configuration);
+    	pthread_mutex_destroy(&mutex_configuration);
 	free(data_to_send);
 }
 
 void *transmition(void *p_data) {
-	int fifo_configuration_fd, fifo_datasender_fd;
+	int fifo_configuration_fd = 0, fifo_datasender_fd = 0;
+	char buffer = '0';
+	int bufferRead[5] = {0};
 
 	init_fifos(&fifo_configuration_fd, &fifo_datasender_fd);
 	fprintf(stdout, "%d and %d\n", fifo_configuration_fd, fifo_datasender_fd);
+	fflush(stdout);
 
-	/*while(!stop) {
+	pthread_mutex_lock(&mutex_configuration);
+	for(int i = 0; i < 5; i++) {
+		for(int j = 0; j < 5; j++) {
+			bufferRead[i] *= 10;
+			if(!read(fifo_configuration_fd, &buffer, sizeof(char))) {
+				fprintf(stdout, "Couldn't read\n");
+				fflush(stdout);
+			}
+			bufferRead[i] += buffer-48;
+		}
+	}
+	fprintf(stdout, "%d %d %d %d %d\n", bufferRead[0], bufferRead[1], bufferRead[2], bufferRead[3], bufferRead[4]);
+	pthread_cond_signal(&arrived_configuration);
+	pthread_mutex_unlock(&mutex_configuration);
+
+	while(!stop) {
 		pthread_mutex_lock(&mutex);
 		pthread_cond_wait(&new_data, &mutex);
-		if(!write(fifo_fd, data_to_send, strlen(data_to_send))) {
+		if(!write(fifo_datasender_fd, data_to_send, strlen(data_to_send))) {
 			fprintf(stdout, "FIFO closed\n");
 			fflush(stdout);
 			break;
 		}
 		pthread_mutex_unlock(&mutex);
-	}*/
+	}
 
 	end_fifos(fifo_configuration_fd, fifo_datasender_fd);
 	fprintf(stdout, "Everything was closed\n");

@@ -50,7 +50,19 @@ void configure_ADC() {
 
 	/*acquisition trigger delay and level activation*/
 	rp_AcqSetTriggerLevel(0.01); //Trig level is set in Volts while in SCPI
-        rp_AcqSetTriggerDelay(8192);
+//        rp_AcqSetTriggerDelay(9000);
+//        rp_AcqSetTriggerDelay(8000);
+//        rp_AcqSetTriggerDelay(7000);
+//        rp_AcqSetTriggerDelay(6000);
+//        rp_AcqSetTriggerDelay(5000);
+//        rp_AcqSetTriggerDelay(4000);
+//        rp_AcqSetTriggerDelay(3000);
+//        rp_AcqSetTriggerDelay(2500);
+//        rp_AcqSetTriggerDelay(2000);
+//        rp_AcqSetTriggerDelay(1500);
+//        rp_AcqSetTriggerDelay(1000);
+//        rp_AcqSetTriggerDelay(500);
+        rp_AcqSetTriggerDelay(0);
 
 	/*start acquisition must be set before trigger initiation*/
 	rp_AcqStart();
@@ -83,7 +95,7 @@ float* acquireADC(uint32_t buff_size, float* temp) {
 #else
 	rp_AcqSetTriggerSrc(RP_TRIG_SRC_CHA_PE);
 #endif
-	state = RP_TRIG_STATE_TRIGGERED;
+	state = RP_TRIG_STATE_WAITING;
 
 	/*waiting for trigger*/
 	while(1){

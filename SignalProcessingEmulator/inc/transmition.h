@@ -12,6 +12,8 @@
 pthread_t transmition_thread;
 pthread_cond_t new_data;
 pthread_mutex_t mutex;
+pthread_cond_t arrived_configuration;
+pthread_mutex_t mutex_configuration;
 char *data_to_send;
 
 void init_transmition();

@@ -9,7 +9,7 @@ void init() {
 	}
 
 	init_control();
-//	init_tcp();
+	init_tcp();
 
 	stop = 0;
 }
@@ -19,7 +19,7 @@ void end(){
 	stop = 1;
 
 	end_control();
-//	end_tcp();
+	end_tcp();
 	rp_Release();
 }
 
@@ -27,10 +27,10 @@ void end(){
 void routine(float* buffer, char* pixel_buffer){
 	int i = 0;
 	int j = 0;
-/*	for(j = 0; j < BUFFER_SIZE; j++)
-		buffer[j] = 0.33;*/
+	for(j = 0; j < BUFFER_SIZE; j++)
+		buffer[j] = 0.33;
 
-	FILE* file = fopen("/tmp/capture_8_16384.txt", "w");
+//	FILE* file = fopen("/tmp/capture_1_0.txt", "w");
 
 	/***
 	 * For each shot:
@@ -47,19 +47,19 @@ void routine(float* buffer, char* pixel_buffer){
 		usleep(66);
 		ramp(RAMP_PIN);
 		usleep(100);*/
-		buffer = acquireADC(BUFFER_SIZE, buffer);
+/*		buffer = acquireADC(BUFFER_SIZE, buffer);
 		for(j = 0; j < BUFFER_SIZE; j++)
 			fprintf(file, "%f\n", buffer[j]);
-		fflush(file);
-/*		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
+		fflush(file);*/
+		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
 		pthread_mutex_lock(&mutex);
 		sprintf(data_to_send, "%s", pixel_buffer);
-		fprintf(file, "%s\n", pixel_buffer);
-		fflush(file);
+//		fprintf(file, "%s\n", pixel_buffer);
+//		fflush(file);
 		pthread_cond_signal(&new_data);
-		pthread_mutex_unlock(&mutex);*/
+		pthread_mutex_unlock(&mutex);
 		i++;
 	}
 
-	fclose(file);
+//	fclose(file);
 }

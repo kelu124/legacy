@@ -2,7 +2,7 @@
 
 int main() {
 	/* Variable Declaration and Initialization */
-	int i = 0;
+//	int i = 0;
 	float *buffer = NULL;
 	char *pixel_buffer = NULL;
 
@@ -16,10 +16,10 @@ int main() {
 	init();
 
 	/* Main routine */
-	for(i = 0; i < 1; i++) {
+//	for(i = 0; i < 1; i++) {
 	//while(1){
 		routine(buffer, pixel_buffer);
-	}
+//	}
 
 	/* End everything */
 	end();
