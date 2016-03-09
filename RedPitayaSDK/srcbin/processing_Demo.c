@@ -4,9 +4,12 @@ int main() {
 	/* Variable Declaration and Initialization */
 	int i = 0;
 	int buffer_size = 2048;
-	int pixel_buffer_size = buffer_size+1;
 	float *buffer = NULL;
 	char *pixel_buffer = NULL;
+	if(argc != 1) {
+		buffer_size = arv[1];
+	}
+	int pixel_buffer_size = buffer_size+1;
 
 	/* Memory Allocation */
 	if((buffer = malloc(buffer_size * sizeof(float))) == NULL)

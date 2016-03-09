@@ -6,6 +6,9 @@ int main() {
 	int i = 0, j = 0;
 	char *pixel_buffer = NULL;
 	int pixel_buffer_size = 2049;
+	if(argc != 1) {
+		pixel_buffer_size = arv[1];
+	}
 
 	/* Memory Allocation */
 	if((pixel_buffer = malloc(pixel_buffer_size * sizeof(char))) == NULL)

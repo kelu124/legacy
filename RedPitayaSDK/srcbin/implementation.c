@@ -2,12 +2,18 @@
 
 int main() {
 	/* Variable Declaration and Initialization */
-//	int i = 0;
-	int decimation = 2;
+	int i = 0;
 	float *buffer = NULL;
-	int buffer_size = 2048;
-	int pixel_buffer_size = buffer_size+1;
 	char *pixel_buffer = NULL;
+	int decimation = 2;
+	int buffer_size = 2048;
+	int nb_images = 1;
+	if(argc != 1) {
+		nb_images = argv[1]
+		buffer_size = arv[2];
+		decimation = argv[3];
+	}
+	int pixel_buffer_size = buffer_size+1;
 
 	/* Memory Allocation */
 	if((buffer = malloc(buffer_size * sizeof(float))) == NULL)
@@ -19,10 +25,9 @@ int main() {
 	init(decimation, pixel_buffer_size);
 
 	/* Main routine */
-//	for(i = 0; i < 1; i++) {
-	//while(1){
+	for(i = 0; i < nb_images; i++) {
 		routine(buffer, buffer_size, pixel_buffer, pixel_buffer_size);
-//	}
+	}
 
 	/* End everything */
 	end();

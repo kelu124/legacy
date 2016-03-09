@@ -15,6 +15,4 @@
 #define NB_TIRS 128
 #define PIXEL_SIZE 1
 
-int nb_images;
-
 #endif

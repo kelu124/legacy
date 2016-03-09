@@ -1,11 +1,15 @@
 #include "../inc/control.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 	/* Variable Declaration and Initialization */
 	int i = 0, j = 0;
+	float* buffer = NULL;
 	int buffer_size = 2048;
 	int decimation = 2;
-	float* buffer = NULL;
+	if(argc != 1) {
+		buffer_size = arv[1];
+		decimation = argv[2];
+	}
 
 	buffer = malloc(buffer_size*sizeof(float));
 
