@@ -12,7 +12,7 @@
 rp_acq_trig_state_t state;
 
 /* The function initializing the control functions, setting everything up */
-void init_control();
+void init_control(int decimation);
 
 /* The function ending the control functions, setting everything down */
 void end_control();
@@ -27,7 +27,7 @@ void configure_ramp();
 void configure_pulse();
 
 /* The function configuring the ADC used for acquiring the datas */
-void configure_ADC();
+void configure_ADC(int decimation);
 
 /* The function sending a pulse */
 void pulse(rp_dpin_t pin);

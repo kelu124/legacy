@@ -3,29 +3,23 @@
 int main() {
 	/* Variable Declaration and Initialization */
 	int i = 0, j = 0;
+	int buffer_size = 2048;
+	int decimation = 2;
 	float* buffer = NULL;
 
-	buffer = malloc(BUFFER_SIZE*sizeof(float));
+	buffer = malloc(buffer_size*sizeof(float));
 
 	/* Initialization */
-	init_control();
+	init_control(decimation);
 
 	for(i = 0; i < 200; i++) {
 		pulse(PULSE_PIN);
-		usleep(100);
-	}
-
-	for(i = 0; i < 200; i++) {
-		ramp(RAMP_PIN);
-		usleep(100);
-	}
-
-	for(i = 0; i < 200; i++) {
-		buffer = acquireADC(BUFFER_SIZE, buffer);
-		for(j = 0; j < BUFFER_SIZE; j++)
+		buffer = acquireADC(buffer_size, buffer);
+		for(j = 0; j < buffer_size; j++)
 			fprintf(stdout, "%f", buffer[j]);
 		fprintf(stdout, "\n");
-		usleep(100);
+		fflush(stdout);
+		usleep(300);
 	}
 
 	/* End everything */

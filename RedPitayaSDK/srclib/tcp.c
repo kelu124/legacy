@@ -1,11 +1,12 @@
 #include "../inc/tcp.h"
 
 /* Initialize everything (The RP and all the configurations) */
-void init_tcp(){
+void init_tcp(int buffer_size){
+	stop = 0;
 	pthread_cond_init(&new_data,NULL);
 	pthread_mutex_init(&mutex,NULL);
 
-	if((data_to_send = malloc(PIXEL_BUFFER_SIZE * sizeof(char))) == NULL)
+	if((data_to_send = malloc(buffer_size * sizeof(char))) == NULL)
 		exit(-1);
 
 	/* Launch the UDP protocol */
@@ -14,6 +15,7 @@ void init_tcp(){
 
 /* End everything (Stop Acquisition, motor and RP resources) */
 void end_tcp() {
+	stop = 1;
 	pthread_cancel(tcp_server_thread);
 	pthread_cond_destroy(&new_data);
     	pthread_mutex_destroy(&mutex);

@@ -1,33 +1,29 @@
 #include "../inc/implementer.h"
 
 /* Initialize everything */
-void init() {
+void init(int decimation, int pixel_buffer_size) {
 	/* RP Initialization */
 	if (rp_Init() != RP_OK) {
 		perror("Red Pitaya API init failed!");
 		exit(EXIT_FAILURE);
 	}
 
-	init_control();
-	init_tcp();
-
-	stop = 0;
+	init_control(decimation);
+	init_tcp(pixel_buffer_size);
 }
 
 /* End everything */
 void end(){
-	stop = 1;
-
 	end_control();
 	end_tcp();
 	rp_Release();
 }
 
 /* Main routine */
-void routine(float* buffer, char* pixel_buffer){
+void routine(float* buffer, int buffer_size, char* pixel_buffer, int pixel_buffer_size){
 	int i = 0;
 	int j = 0;
-	for(j = 0; j < BUFFER_SIZE; j++)
+	for(j = 0; j < buffer_size; j++)
 		buffer[j] = 0.33;
 
 //	FILE* file = fopen("/tmp/capture_1_0.txt", "w");
@@ -51,7 +47,7 @@ void routine(float* buffer, char* pixel_buffer){
 		for(j = 0; j < BUFFER_SIZE; j++)
 			fprintf(file, "%f\n", buffer[j]);
 		fflush(file);*/
-		pixel_buffer = calcul_pixel(buffer, i, pixel_buffer);
+		pixel_buffer = calcul_pixel(buffer, buffer_size, i, pixel_buffer, pixel_buffer_size);
 		pthread_mutex_lock(&mutex);
 		sprintf(data_to_send, "%s", pixel_buffer);
 //		fprintf(file, "%s\n", pixel_buffer);
