@@ -40,7 +40,6 @@ void *process_server (void *p_data) {
 		pthread_cond_wait(&new_data_to_process, &process_mutex);
 		data.pixel_tab = calcul_pixel(data.buffer, data.buffer_size, data.position, data.pixel_tab, data.pixel_buffer_size);
 		/* We should have a string like "ABBB...BBB */
-		fprintf(stdout, "%s\n", data.pixel_tab);
 		pthread_mutex_unlock(&process_mutex);
 	}
 	pthread_exit(NULL);
