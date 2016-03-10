@@ -9,13 +9,13 @@ void init(int decimation, int pixel_buffer_size) {
 	}
 
 	init_control(decimation);
-	init_tcp(pixel_buffer_size);
+	init_transmition();
 }
 
 /* End everything */
 void end(){
 	end_control();
-	end_tcp();
+	end_transmition();
 	rp_Release();
 }
 
@@ -27,8 +27,6 @@ void routine(int16_t* buffer, int buffer_size, char* pixel_buffer, int pixel_buf
 	for(j = 0; j < buffer_size; j++)
 		buffer[j] = 160;
 
-//	FILE* file = fopen("/tmp/capture_1_0.txt", "w");
-
 	/***
 	 * For each shot:
 	 * Pulse
@@ -40,25 +38,18 @@ void routine(int16_t* buffer, int buffer_size, char* pixel_buffer, int pixel_buf
 	***/
 	while(i < 10) {
 		/* Waiting for the firing command */
-/*		pulse(PULSE_PIN);
-		usleep(66);
-		ramp(RAMP_PIN);
-		usleep(100);*/
 /*		buffer = acquireADC(BUFFER_SIZE, buffer);
 		for(j = 0; j < BUFFER_SIZE; j++)
 			fprintf(file, "%f\n", buffer[j]);
 		fflush(file);*/
 		pixel_buffer = calcul_pixel(buffer, buffer_size, i, pixel_buffer, pixel_buffer_size);
 		pthread_mutex_lock(&mutex);
-		sprintf(data_to_send, "%s", pixel_buffer);
-//		fprintf(file, "%s\n", pixel_buffer);
-//		fflush(file);
+		sprintf(the_data.data, "%s", pixel_buffer);
 		pthread_cond_signal(&new_data);
 		pthread_mutex_unlock(&mutex);
 		i++;
 	}
 
-//	fclose(file);
 }
 #else
 /* Main routine */
@@ -68,8 +59,6 @@ void routine(float* buffer, int buffer_size, char* pixel_buffer, int pixel_buffe
 	for(j = 0; j < buffer_size; j++)
 		buffer[j] = 0.33;
 
-//	FILE* file = fopen("/tmp/capture_1_0.txt", "w");
-
 	/***
 	 * For each shot:
 	 * Pulse
@@ -81,19 +70,13 @@ void routine(float* buffer, int buffer_size, char* pixel_buffer, int pixel_buffe
 	***/
 	while(i < 10) {
 		/* Waiting for the firing command */
-/*		pulse(PULSE_PIN);
-		usleep(66);
-		ramp(RAMP_PIN);
-		usleep(100);*/
 /*		buffer = acquireADC(BUFFER_SIZE, buffer);
 		for(j = 0; j < BUFFER_SIZE; j++)
 			fprintf(file, "%f\n", buffer[j]);
 		fflush(file);*/
 		pixel_buffer = calcul_pixel(buffer, buffer_size, i, pixel_buffer, pixel_buffer_size);
 		pthread_mutex_lock(&mutex);
-		sprintf(data_to_send, "%s", pixel_buffer);
-//		fprintf(file, "%s\n", pixel_buffer);
-//		fflush(file);
+		sprintf(the_data.data, "%s", pixel_buffer);
 		pthread_cond_signal(&new_data);
 		pthread_mutex_unlock(&mutex);
 		i++;

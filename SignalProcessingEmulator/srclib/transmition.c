@@ -67,13 +67,13 @@ void *transmition(void *p_data) {
 			bufferRead[i] += buffer-48;
 		}
 	}
-	the_data.nb_images = atoi(bufferRead[0]);
-	the_data.ramp_length = atoi(bufferRead[1]);
-	the_data.ramp_position = atoi(bufferRead[2]);
-	the_data.buffer_size = atoi(bufferRead[3]);
-	the_data.decimation = atoi(bufferRead[4]);
-	the_data.data_length = data.buffer_size+1;
-	the_data.data = malloc(data.data_length*sizeof(char));
+	the_data.nb_images = bufferRead[0];
+	the_data.ramp_size = bufferRead[1];
+	the_data.ramp_position = bufferRead[2];
+	the_data.buffer_size = bufferRead[3];
+	the_data.decimation = bufferRead[4];
+	the_data.data_length = the_data.buffer_size+1;
+	the_data.data = malloc(the_data.data_length*sizeof(char));
 	pthread_cond_signal(&arrived_configuration);
 	pthread_mutex_unlock(&mutex_configuration);
 
