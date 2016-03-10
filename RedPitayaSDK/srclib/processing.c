@@ -17,3 +17,31 @@ char* calcul_pixel(float* buffer, int buffer_size, int position, char* pixel_tab
 
 	return(pixel_tab);
 }
+
+void init_processing() {
+	process_stop = 0;
+	pthread_cond_init(&new_data_to_process,NULL);
+	pthread_mutex_init(&process_mutex,NULL);
+
+	/* Launch the processor Thread */
+	pthread_create(&processor_thread, NULL, process_server, NULL);
+}
+
+void end_processing() {
+	process_stop = 1;
+	pthread_join(processor_thread, NULL);
+	pthread_cond_destroy(&new_data_to_process);
+    	pthread_mutex_destroy(&process_mutex);
+}
+
+void *process_server (void *p_data) {
+	while(!process_stop) {
+		pthread_mutex_lock(&process_mutex);
+		pthread_cond_wait(&new_data_to_process, &process_mutex);
+		data.pixel_tab = calcul_pixel(data.buffer, data.buffer_size, data.position, data.pixel_tab, data.pixel_buffer_size);
+		/* We should have a string like "ABBB...BBB */
+		fprintf(stdout, "%s\n", data.pixel_tab);
+		pthread_mutex_unlock(&process_mutex);
+	}
+	pthread_exit(NULL);
+}

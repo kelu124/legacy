@@ -1,6 +1,6 @@
 #include "../inc/implementer.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 	/* Variable Declaration and Initialization */
 	int i = 0;
 	float *buffer = NULL;
@@ -9,9 +9,9 @@ int main() {
 	int buffer_size = 2048;
 	int nb_images = 1;
 	if(argc != 1) {
-		nb_images = argv[1]
-		buffer_size = arv[2];
-		decimation = argv[3];
+		nb_images = atoi(argv[1]);
+		buffer_size = atoi(argv[2]);
+		decimation = atoi(argv[3]);
 	}
 	int pixel_buffer_size = buffer_size+1;
 

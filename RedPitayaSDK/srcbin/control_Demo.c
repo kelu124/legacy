@@ -7,8 +7,8 @@ int main(int argc, char* argv[]) {
 	int buffer_size = 2048;
 	int decimation = 2;
 	if(argc != 1) {
-		buffer_size = arv[1];
-		decimation = argv[2];
+		buffer_size = atoi(argv[1]);
+		decimation = atoi(argv[2]);
 	}
 
 	buffer = malloc(buffer_size*sizeof(float));
