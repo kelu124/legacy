@@ -1,23 +1,26 @@
-var Data = require('./data.model');
-var fs = require('fs'),
+var Data = require('./data.model'),
+    fs = require('fs'),
     bite_size = 2049,
     readbytes = 0,
     file,
     godata = [],
     img = [],
     nbr = 1,
-    nbrimg = 1,
+    nbrimg = 0,
     i = 0;
 
 module.exports = function(app) {
+
+    var _this = this;
 
     app.put('/api/SetNbrImg',function(req, res){
         nbr = req.body.nbr_img
     });
 
     app.get('/api/Data',function(req, res){
-        Data.find({idUser: req.params.id},function(err, data) {
+        Data.find({idUser: req.session.user._id},function(err, data) {
             (err ? res.send(err) : res.json(data));
+
         });
     });
 
@@ -45,7 +48,7 @@ module.exports = function(app) {
                 }
                 else {
                     console.log("it is the end of the transmission")
-                    res.json(godata)
+                    res.json(godata);
                     godata = [];
                     nbrimg = 0;
                     return;
@@ -69,7 +72,6 @@ module.exports = function(app) {
                 }
                 else{
                     img.push(buff.toString('utf-8', 0, bytecount));
-                    godata.push(img)
                     i++;
                 }
             }
@@ -77,9 +79,33 @@ module.exports = function(app) {
             process.nextTick(readsome);
         }
     });
+
     app.post('/api/sendData',function(req, res){
         Data.create(req.body, function(err) {
             (err ? res.send(err) : res.status(200).send())
         });
-    })
+    });
+
+    app.get('/api/:id/sendImages',function(req,res){
+        Data.findById(req.params.id,function(err, datum) {
+            var images = datum.images,
+                i = 0,
+                file = fs.createWriteStream("server/public/images.txt");
+
+            while(i < images.length){
+                file.write(images[i] + "\n\n");
+                i++;
+            }
+            file.close();
+        });
+    });
+
+    app.get('/images',function(req, res){
+        res.download("server/public/images.txt", "images.txt", function(err){
+            if(err){
+                console.log(err)
+            }
+        });
+    });
 };
+

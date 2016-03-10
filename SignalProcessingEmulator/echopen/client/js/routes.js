@@ -18,6 +18,10 @@ angular.module('app')
                 templateUrl: 'views/user/SignIn.html',
                 controller: 'UserController as usr'
             })
+            .when('/download', {
+                templateUrl: 'views/data/download.html',
+                controller: 'DataController as data'
+            })
             .otherwise({
                 templateUrl: 'views/data/settings.html',
                 controller: 'MainController as main'

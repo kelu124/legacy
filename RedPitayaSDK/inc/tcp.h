@@ -22,9 +22,10 @@ pthread_t tcp_server_thread;
 pthread_cond_t new_data;
 pthread_mutex_t mutex;
 char *data_to_send;
+int stop;
 
 /* The function setting TCP up */
-void init_tcp();
+void init_tcp(int pixel_buffer_size);
 
 /* The function setting TCP down */
 void end_tcp();

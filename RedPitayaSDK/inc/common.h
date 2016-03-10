@@ -13,7 +13,4 @@
 #include "rp.h"
 #include "configuration.h"
 
-/*** Global Variables ***/
-extern int stop;
-
 #endif

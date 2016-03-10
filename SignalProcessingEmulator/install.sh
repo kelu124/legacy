@@ -17,6 +17,12 @@ echo -e "\nINSTALLING NANO..."
 sudo apt-get install nano
 echo -e "\nINSTALLING CURL..."
 sudo apt-get install curl
+echo -e "\nINSTALLING LIBC6..."
+sudo apt-get install libc6-dev-armel-cross
+echo -e "\nINSTALLING BUILD ESSENTIAL..."
+sudo apt-get install build-essential
+echo -e "\nINSTALLING GCC ARM COMPILER..."
+sudo apt-get install gcc-arm-linux-gnueabihf
 
 #Installing compilement tools
 echo -e "INSTALLING GCC HF COMPILER..."

@@ -45,9 +45,6 @@ echo -e "\nCOMPILING SOURCE FILE..."
 
 make clean all OBJECT=$2 TARGET=$EXECUTABLE
 
-#Remount red pitaya file system
-#sshpass -p root ssh root@$IP 'mount -o rw, remount /opt/redpitaya'
-
 #Creating log directories
 sshpass -p root ssh root@$IP 'mkdir -p /var/log/sdk_log'
 sshpass -p root ssh root@$IP 'touch /var/log/sdk_log/debug'
@@ -55,11 +52,10 @@ sshpass -p root ssh root@$IP 'touch /var/log/sdk_log/debug'
 #Copying executable file to red pitaya
 echo -e "\nEXECUTING REMOTE FILE..."
 sshpass -p root scp $PWD/$EXECUTABLE root@$IP:/tmp
-#sshpass -p root scp -r $PWD/echopen root@$IP:/root
+sshpass -p root scp -r $PWD/echopen root@$IP:/root
 #sshpass -p root ssh root@$IP 'cd /root/echopen;npm install | tee '$REDIRECT
 #sshpass -p root ssh root@$IP 'cd /root/echopen;bower install --allow-root | tee '$REDIRECT
 echo -e "\nOUTPUT: \n----------"
-#sshpass -p root ssh root@$IP 'node /root/echopen/server | tee '$REDIRECT
 sshpass -p root ssh root@$IP '/tmp/'$EXECUTABLE' | tee '$REDIRECT
 
 #make clean

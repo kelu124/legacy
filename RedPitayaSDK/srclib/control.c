@@ -1,11 +1,11 @@
 #include "../inc/control.h"
 
 /* Initialize everything (The RP and all the configurations) */
-void init_control(){
+void init_control(int decimation){
 	/* Configuration */
 	configure_pulse();
 	configure_ramp();
-	configure_ADC();
+	configure_ADC(decimation);
 }
 
 /* End everything (Stop Acquisition, motor and RP resources) */
@@ -37,31 +37,33 @@ void configure_pulse() {
 }
 
 /* Configure the ADC at 125MHz with an external trigger */
-void configure_ADC() {
-#if(!DECIMATE8)
-	/* decimation n (=1,8,64...) : frequency = 125 MHz*/
-	rp_AcqSetDecimation(RP_DEC_1);
-#elif(DECIMATE8)
-	/* decimation n (=1,8,64...) : frequency = 125 MHz*/
-	rp_AcqSetDecimation(RP_DEC_8);
+void configure_ADC(int decimation) {
+	/* decimation n (=1,8,64...)*/
+	switch(decimation) {
+		case 1:
+			rp_AcqSetDecimation(RP_DEC_1);
+			break;
+		case 2:
+			rp_AcqSetDecimation(RP_DEC_8);
+			break;
+		case 3:
+			rp_AcqSetDecimation(RP_DEC_64);
+			break;
+		case 4:
+			rp_AcqSetDecimation(RP_DEC_1024);
+			break;
+		case 5:
+			rp_AcqSetDecimation(RP_DEC_8192);
+			break;
+		default:
+			exit(-1);
+			break;
+	}
 	/* Enable the averaging on the ADC */
 	rp_AcqSetAveraging(TRUE);
-#endif
 
 	/*acquisition trigger delay and level activation*/
 	rp_AcqSetTriggerLevel(0.01); //Trig level is set in Volts while in SCPI
-//        rp_AcqSetTriggerDelay(9000);
-//        rp_AcqSetTriggerDelay(8000);
-//        rp_AcqSetTriggerDelay(7000);
-//        rp_AcqSetTriggerDelay(6000);
-//        rp_AcqSetTriggerDelay(5000);
-//        rp_AcqSetTriggerDelay(4000);
-//        rp_AcqSetTriggerDelay(3000);
-//        rp_AcqSetTriggerDelay(2500);
-//        rp_AcqSetTriggerDelay(2000);
-//        rp_AcqSetTriggerDelay(1500);
-//        rp_AcqSetTriggerDelay(1000);
-//        rp_AcqSetTriggerDelay(500);
         rp_AcqSetTriggerDelay(0);
 
 	/*start acquisition must be set before trigger initiation*/
@@ -87,6 +89,32 @@ void ramp(rp_channel_t channel) {
 	rp_GenOutEnable(channel);
 }
 
+#if(RAW == ON)
+/* Acquire one ray with the ADC */
+int16_t* acquireADC(uint32_t buff_size, int16_t* temp) {
+	/*trigger source, external, positif*/
+#if(EXTERNAL_TRIGGER)
+	rp_AcqSetTriggerSrc(RP_TRIG_SRC_EXT_PE);
+#else
+	rp_AcqSetTriggerSrc(RP_TRIG_SRC_CHA_PE);
+#endif
+	state = RP_TRIG_STATE_WAITING;
+
+	/*waiting for trigger*/
+	while(1){
+		rp_AcqGetTriggerState(&state);
+		if(state == RP_TRIG_STATE_TRIGGERED){
+			break;
+		}
+	}
+
+	ramp(RAMP_PIN);
+	/*put acquisition data in the temporary buffer*/
+	rp_AcqGetOldestDataRaw(ACQUISITION_PIN, &buff_size, temp);
+
+	return(temp);
+}
+#else
 /* Acquire one ray with the ADC */
 float* acquireADC(uint32_t buff_size, float* temp) {
 	/*trigger source, external, positif*/
@@ -111,3 +139,4 @@ float* acquireADC(uint32_t buff_size, float* temp) {
 
 	return(temp);
 }
+#endif

@@ -15,6 +15,8 @@ app.use(function(req, res) {
     req.next();
 });
 
+
+
 app.use(express.static(__dirname + '/../client'));
 
 require('./routes')(app);

@@ -1,21 +1,25 @@
 #include "../inc/tcp.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 
 	/* Variable Declaration and Initialization */
 	int i = 0, j = 0;
 	char *pixel_buffer = NULL;
+	int pixel_buffer_size = 2049;
+	if(argc != 1) {
+		pixel_buffer_size = atoi(argv[1]);
+	}
 
 	/* Memory Allocation */
-	if((pixel_buffer = malloc(PIXEL_BUFFER_SIZE * sizeof(char))) == NULL)
+	if((pixel_buffer = malloc(pixel_buffer_size * sizeof(char))) == NULL)
 		exit(-1);
 
 
-	for(i = 0; i < PIXEL_BUFFER_SIZE; i++)
+	for(i = 0; i < pixel_buffer_size; i++)
 		pixel_buffer[i] = 120;
 
 	/* Initialization */
-	init_tcp();
+	init_tcp(pixel_buffer_size);
 
 	/* Main routine */
 	for(j = 0; j < 2000; j++)
@@ -27,8 +31,6 @@ int main() {
 			pthread_mutex_unlock(&mutex);
 			usleep(300);
 		}
-
-	stop = 1;
 
 	/* End everything */
 	end_tcp();
