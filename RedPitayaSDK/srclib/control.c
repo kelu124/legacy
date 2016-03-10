@@ -89,6 +89,32 @@ void ramp(rp_channel_t channel) {
 	rp_GenOutEnable(channel);
 }
 
+#if(RAW == ON)
+/* Acquire one ray with the ADC */
+int16_t* acquireADC(uint32_t buff_size, int16_t* temp) {
+	/*trigger source, external, positif*/
+#if(EXTERNAL_TRIGGER)
+	rp_AcqSetTriggerSrc(RP_TRIG_SRC_EXT_PE);
+#else
+	rp_AcqSetTriggerSrc(RP_TRIG_SRC_CHA_PE);
+#endif
+	state = RP_TRIG_STATE_WAITING;
+
+	/*waiting for trigger*/
+	while(1){
+		rp_AcqGetTriggerState(&state);
+		if(state == RP_TRIG_STATE_TRIGGERED){
+			break;
+		}
+	}
+
+	ramp(RAMP_PIN);
+	/*put acquisition data in the temporary buffer*/
+	rp_AcqGetOldestDataRaw(ACQUISITION_PIN, &buff_size, temp);
+
+	return(temp);
+}
+#else
 /* Acquire one ray with the ADC */
 float* acquireADC(uint32_t buff_size, float* temp) {
 	/*trigger source, external, positif*/
@@ -113,3 +139,4 @@ float* acquireADC(uint32_t buff_size, float* temp) {
 
 	return(temp);
 }
+#endif

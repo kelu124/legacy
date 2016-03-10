@@ -9,16 +9,17 @@ RP_PATH_INCLUDE = -I./inc
 RP_LIB_INCLUDE = -L./inc -lm -lpthread -lrp
 
 #Cross compiler 
-CROSS_COMPILE ?= arm-linux-gnueabi-
-#CROSS_COMPILE ?= arm-linux-gnueabihf-
+CROSS_COMPILE	?=	$(GNUEABI)
+#Cross compiler options
+GNUEABI	?= arm-linux-gnueabi-
+GNUEABIHF ?= arm-linux-gnueabihf-
 CC = $(CROSS_COMPILE)gcc
 
 #Flags
 CFLAGS = -g -O2 -std=gnu99 -Wall -Werror
 
 #Objects
-OBJECTS	= processing.o
-#control.o common.o processing.o tcp.o implementer.o
+OBJECTS	= control.o common.o processing.o tcp.o implementer.o
 TARGET ?= implementation
 
 #Build the executable

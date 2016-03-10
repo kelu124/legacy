@@ -10,7 +10,11 @@ pthread_cond_t new_data_to_process;
 pthread_mutex_t process_mutex;
 
 typedef struct data_to_process_ {
+#if(RAW == ON)
+	int16_t* buffer;
+#else
 	float* buffer;
+#endif
 	int buffer_size;
 	int position;
 	char* pixel_tab;
@@ -20,8 +24,13 @@ typedef struct data_to_process_ {
 data_to_process data;
 int process_stop;
 
+#if(RAW == ON)
+/* The function calculating the pixels */
+char* calcul_pixel(int16_t* buffer, int buffer_size, int position, char* pixel_tab, int pixel_buffer_size);
+#else
 /* The function calculating the pixels */
 char* calcul_pixel(float* buffer, int buffer_size, int position, char* pixel_tab, int pixel_buffer_size);
+#endif
 
 /* The function setting processing up */
 void init_processing();

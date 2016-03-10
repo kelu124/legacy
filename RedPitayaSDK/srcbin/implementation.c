@@ -3,7 +3,6 @@
 int main(int argc, char* argv[]) {
 	/* Variable Declaration and Initialization */
 	int i = 0;
-	float *buffer = NULL;
 	char *pixel_buffer = NULL;
 	int decimation = 2;
 	int buffer_size = 2048;
@@ -16,8 +15,15 @@ int main(int argc, char* argv[]) {
 	int pixel_buffer_size = buffer_size+1;
 
 	/* Memory Allocation */
+#if(RAW == ON)
+	int16_t *buffer = NULL;
+	if((buffer = malloc(buffer_size * sizeof(int16_t))) == NULL)
+		exit(-1);
+#else
+	float *buffer = NULL;
 	if((buffer = malloc(buffer_size * sizeof(float))) == NULL)
 		exit(-1);
+#endif
 	if((pixel_buffer = malloc(pixel_buffer_size * sizeof(char))) == NULL)
 		exit(-1);
 

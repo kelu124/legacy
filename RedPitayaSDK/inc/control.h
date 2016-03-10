@@ -35,7 +35,12 @@ void pulse(rp_dpin_t pin);
 /* The function sending a ramp */
 void ramp(rp_channel_t channel);
 
+#if(RAW == ON)
+/* The function acquiring datas through ADC */
+int16_t* acquireADC(uint32_t buff_size, int16_t* temp);
+#else
 /* The function acquiring datas through ADC */
 float* acquireADC(uint32_t buff_size, float* temp);
+#endif
 
 #endif

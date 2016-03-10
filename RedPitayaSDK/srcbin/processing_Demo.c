@@ -13,8 +13,13 @@ int main(int argc, char* argv[]) {
 	data.pixel_buffer_size = pixel_buffer_size;
 
 	/* Memory Allocation */
+#if(RAW == ON)
+	if((data.buffer = malloc(buffer_size * sizeof(int16_t))) == NULL)
+		exit(-1);
+#else
 	if((data.buffer = malloc(buffer_size * sizeof(float))) == NULL)
 		exit(-1);
+#endif
 	if((data.pixel_tab = malloc(pixel_buffer_size * sizeof(char))) == NULL)
 		exit(-1);
 
