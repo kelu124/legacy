@@ -7,32 +7,19 @@ void init_transmition(){
 	pthread_cond_init(&arrived_configuration,NULL);
 	pthread_mutex_init(&mutex_configuration,NULL);
 
-	if((data_to_send = malloc(PIXEL_BUFFER_SIZE * sizeof(char))) == NULL)
-		exit(-1);
+	stop = 0;
 
 	/* Launch the transmission protocol */
 	pthread_create(&transmition_thread, NULL, transmition, NULL);
 }
 
 /* Init the fifos */
-void init_fifos(int* fifo_configuration_fd, int* fifo_datasender_fd) {
-	if (mkfifo("/tmp/FIFOSENDER", S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP) != 0) {
-		if (errno != EEXIST) {
-			perror("Creating the fifo FIFOSENDER. Error");
-			exit(1);
-		}
-	}
+void init_fifos(int* fifo_configuration_fd) {
 	if (mkfifo("/tmp/FIFOCONFIGURATION", S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP) != 0) {
 		if (errno != EEXIST) {
 			perror("Creating the fifo FIFOCONFIGURATION. Error");
 			exit(1);
 		}
-	}
-
-	// Open the fifo for writing
-	if ((*fifo_datasender_fd = open("/tmp/FIFOSENDER", O_WRONLY)) < 0) {
-		perror("Opening the fifo for writing. Error");
-		exit(2);
 	}
 
 	// Open the fifo configuration for reading
@@ -43,29 +30,31 @@ void init_fifos(int* fifo_configuration_fd, int* fifo_datasender_fd) {
 }
 
 /* Close the fifos */
-void end_fifos(int fifo_configuration_fd, int fifo_datasender_fd) {
+void end_fifos(int fifo_configuration_fd) {
 	close(fifo_configuration_fd);
-	close(fifo_datasender_fd);
 }
 
 /* End the transmition */
 void end_transmition() {
+	stop = 1;
 	pthread_join(transmition_thread, NULL);
 	pthread_cond_destroy(&new_data);
     	pthread_mutex_destroy(&mutex);
 	pthread_cond_destroy(&arrived_configuration);
     	pthread_mutex_destroy(&mutex_configuration);
-	free(data_to_send);
 }
 
 void *transmition(void *p_data) {
-	int fifo_configuration_fd = 0, fifo_datasender_fd = 0;
+	int fifo_configuration_fd = 0;
 	char buffer = '0';
 	int bufferRead[5] = {0};
+	FILE* file = NULL;
 
-	init_fifos(&fifo_configuration_fd, &fifo_datasender_fd);
-	fprintf(stdout, "%d and %d\n", fifo_configuration_fd, fifo_datasender_fd);
-	fflush(stdout);
+	if( (file = fopen("/tmp/imageTemp.txt", "w")) == NULL) {
+		exit(-2);
+	}
+
+	init_fifos(&fifo_configuration_fd);
 
 	pthread_mutex_lock(&mutex_configuration);
 	for(int i = 0; i < 5; i++) {
@@ -78,22 +67,26 @@ void *transmition(void *p_data) {
 			bufferRead[i] += buffer-48;
 		}
 	}
-	fprintf(stdout, "%d %d %d %d %d\n", bufferRead[0], bufferRead[1], bufferRead[2], bufferRead[3], bufferRead[4]);
+	the_data.nb_images = atoi(bufferRead[0]);
+	the_data.ramp_length = atoi(bufferRead[1]);
+	the_data.ramp_position = atoi(bufferRead[2]);
+	the_data.buffer_size = atoi(bufferRead[3]);
+	the_data.decimation = atoi(bufferRead[4]);
+	the_data.data_length = data.buffer_size+1;
+	the_data.data = malloc(data.data_length*sizeof(char));
 	pthread_cond_signal(&arrived_configuration);
 	pthread_mutex_unlock(&mutex_configuration);
 
 	while(!stop) {
 		pthread_mutex_lock(&mutex);
 		pthread_cond_wait(&new_data, &mutex);
-		if(!write(fifo_datasender_fd, data_to_send, strlen(data_to_send))) {
-			fprintf(stdout, "FIFO closed\n");
-			fflush(stdout);
-			break;
-		}
+		fprintf(file, "%s\n", the_data.data);
+		fflush(stdout);
 		pthread_mutex_unlock(&mutex);
 	}
 
-	end_fifos(fifo_configuration_fd, fifo_datasender_fd);
+	end_fifos(fifo_configuration_fd);
+	free(the_data.data);
 	fprintf(stdout, "Everything was closed\n");
 	fflush(stdout);
 
