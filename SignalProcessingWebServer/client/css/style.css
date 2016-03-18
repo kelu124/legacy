@@ -1,0 +1,38 @@
+body {
+    background-attachment:fixed;
+    background-image:url(../images/logo2.png),
+    url(../images/fond2.jpg);
+    background-position: center,center;
+    background-repeat: no-repeat;
+}
+
+.right{
+    display : inline-block;
+    float: right;
+}
+
+.container{
+    margin-bottom: 200px;
+}
+
+.form{
+    padding: 20px;
+    padding-bottom: 50px;
+    margin-right: 10%;
+    margin-left: 10%;
+    background-color: ghostwhite;
+    box-shadow: 8px 8px 0px #aaa;
+}
+
+.footer{
+    margin-top: 40px;
+    padding-top : 1%;
+    padding-left : 1%;
+    padding-right : 1%;
+    alignment:center ;
+    background-color: whitesmoke;
+    position: fixed;
+    bottom: 0%;
+    overflow: hidden;
+    font-size: 10px
+}
