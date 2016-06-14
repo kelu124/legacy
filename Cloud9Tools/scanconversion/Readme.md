@@ -5,17 +5,21 @@ We choose to share our passion with you guys and so to develop together on the s
 # Guide to set-up
 
 ### Preparing your workspace
-To contribute, you have to create your own workspace under the `/home/ubuntu/workspace` directory with the following format `myusername`.
+To get a credential, send us an email to the address nowami@echopen.org. We will deploy for you an VM instance, which consists in a repo with data input, classic pre-installed packages,  and some routines code. Your code will happen in the `/home/ubuntu/workspace/` directory, which is on a git source control system. The central repo is here [https://github.com/echopen/kit-soft]. 
 
-You have to put your code under version control. `git` is wished and is already installed but you can use any VCS that suits you.
+** `kit-soft` repo contains a lot of tools, here we only need the `Cloud9Tools` directory, so do not be surprised finding this very and only directory on your local Cloud9. We used a git's sparse checkout trick to do that **
+
+For the community to benefit from your insights, you’ll have to create a custom branch in the format `your_name`.
+
+**Please do not commit on master !**
 
 ### Where to get images
 
-The images are available in the input folder `/home/ubuntu/$myusername/input`, in `csv` format. Images are present in scan converted format under the subfolder `scan_converted`  and “raw” images are available under the subfolder `raw`
+The images are available in the input folder `/home/ubuntu/ImageProcessing/Cloud9Tools/scanconversion/data`, in `csv` format. Images are present in scan converted format under the subfolder `scan_converted`  and `raw` images are available under the subfolder `raw`
 
 ### To submit
 
-The output should be provided in scan converted format and stored in  `/home/ubuntu/$myusername/output`
+The output should be provided in scan converted format and stored in  `/home/ubuntu/ImageProcessing/output`
 
 If you run the the `run()` method, then your code is compiled.
 When you run the `run_and_summit()`, your code is compiled, a script stress-tests it and the performance KPIs update a leaderboard on our website.
