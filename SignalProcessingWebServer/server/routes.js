@@ -7,6 +7,6 @@ module.exports = function(app) {
     require('./data/route_data')(app);
 
     app.get('*', function(req, res) {
-        res.sendFile(path.resolve('../echopen/client/index.html'));
+        res.sendFile(path.resolve('./client/index.html'));
     });
 };
