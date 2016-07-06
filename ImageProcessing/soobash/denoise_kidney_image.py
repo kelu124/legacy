@@ -1,6 +1,6 @@
 import os,sys
 from skimage import io
-from skimage import filter
+from skimage import restoration
 
 kidney_image = io.imread("color_img.bmp")
 print kidney_image.shape
@@ -13,11 +13,10 @@ print kidney_image.shape
 
 
 # do a test denosing using a total variation filter
-kidney_image_denoised_tv = filter.denoise_tv_chambolle(kidney_image, weight=0.1)
-io.imsave('kidney_image_denoised_tv.bmp',test_image_denoised_tv)
+kidney_image_denoised_tv = restoration.denoise_tv_chambolle(kidney_image, weight=0.1)
+io.imsave('kidney_image_denoised_tv_test.bmp',kidney_image_denoised_tv)
 
 # do a test denosing using a lateral filter to preserve edges
-kidney_image_denoised_lateral = filter.denoise_bilateral(kidney_image, sigma_range=0.05, sigma_spatial=15)
+kidney_image_denoised_lateral_test = restoration.denoise_bilateral(kidney_image, sigma_range=0.01, sigma_spatial=15, multichannel=False)
 
-# save the denoised image
-io.imsave('kidney_image_denoised_lateral.bmp',test_image_denoised_lateral)
+io.imsave('kidney_image_denoised_lateral_test.bmp',kidney_image_denoised_lateral)
