@@ -3,13 +3,12 @@
 
 <head>
     <base href="/">
-    <meta charset= = "utf-8">
     <title>echOpen</title>
+    <meta charset= = "utf-8">
     <link rel="icon" type="image/png" href="images/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
-
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 
@@ -27,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href=""><img class="navbar-brand" src="images/logo.png"></a>
+                <img class="navbar-brand" src="images/logo.png">
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -45,7 +44,7 @@
                         <li ng-switch-when="ok" class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{main.user.first_name}}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="" ng-click="main.signout()">Log out</a></li>
+                                <li><a href="" ng-click="main.signout()">Sign out</a></li>
                                 <li><a ng-click="main.setuser2(main.user)" href="/users/EditUser">My account</a></li>
                             </ul>
                         </li>
@@ -75,15 +74,15 @@
 </div>
 <!-- MainController -->
 <footer class="footer">
-    <p>Echopen s'engage à ce que toutes les informations personnelles concernant
+    <p>echOpen s'engage à ce que toutes les informations personnelles concernant
         l'utilisateur contenues dans le formulaire de souscription soient considérées
         comme des informations confidentielles et ne soient utilisées qu'à des fins de communication.
         Ces informations feront l'objet d'un traitement automatisé. Conformément à la loi informatique et
         libertés du 6 janvier 1978, le client dispose d'un droit d'accès, de rectification et d'opposition
         aux données personnelles le concernant. Pour plus d'informations
         <a rel="nofollow" class="external text" href="mailto:contact@echopen.org">contactez-nous</a>
-        , ou jetez un coup d'oeil aux <a href="http://echopen.org/index.php?title=Mentions_l%C3%A9gales" title="Mentions légales" target="_blank">Mentions légales</a>
-        ou aux <a href="http://echopen.org/index.php?title=CGU" title="CGU" target="_blank"> conditions générales d'utilisation</a> du wiki echopen.</p>
+        , ou jetez un coup d'oeil aux <a href=""http://echopen.org/index.php?title=Mentions_légales" title="Mentions légales">Mentions légales</a>
+        ou aux <a href="http://echopen.org/index.php?title=CGU" title="CGU"> conditions générales d'utilisation</a> du wiki echopen.</p>
 </footer>
 <!-- JS Includes -->
 <script src="/libs/jquery/dist/jquery.min.js"></script>

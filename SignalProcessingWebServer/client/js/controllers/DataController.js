@@ -71,9 +71,9 @@ angular.module('app')
          @return no return */
         this.sendImages = function(datum){
             $http.get('/api/'+ datum._id + '/sendImages', datum).then(
-                $window.open("http://192.168.128.5:3700/images")
+                $window.open("http://92.243.29.92:3700/images/"+datum._id)
             ).then($route.reload())};
-
+	
         /** @brief delete data
          @param string id : image._id
          @return no return */
