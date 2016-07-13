@@ -57,23 +57,23 @@ server will be available on localhost:3700
 * Mathieu Regnier
 
 
-### if problems with mongod ###
+### if u have some problems with mongod ###
 
-look if u have the rights to use the files in /data/db
+look if u have the rights to use the files in /data/db.
 
-then
+then :
 
 ```
 sudo rm mongod.lock
 ```
 
-and everything except  /journal
+and rm everything else except  /journal.
 
-u may have to type 
+u may have to type : 
 ```
 export lc_all=c
 ```
-Finally, type
+Finally, type :
 ```
 sudo mongod --smallfiles
 ```
