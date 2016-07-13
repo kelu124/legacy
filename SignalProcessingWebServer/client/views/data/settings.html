@@ -1,72 +1,9 @@
 <h1>Configuration</h1>
+
 <div class="form">
     <form ng-submit="data.sendSettings()" >
-        <div class="form-group">
-            <label for="nbr_img">Number of images</label>
-            <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" placeholder="Max 50"  data-target="#numberofimage" aria-expanded="false" aria-controls="numberofimage">
-                Info
-            </button>
-            <div class="collapse" id="numberofimage">
-                <div class="well">
-                    <p>Number of images to acquire</p>
-                </div>
-            </div>
-            <input type="number" class="form-control" id="nbr_img" placeholder="Between 1 and 50" ng-model="data.settings.nbr_img" min="1" max="50" required>
-        </div>
-
-        <div class="form-group">
-            <label for="length_ramp">Length of the ramp</label>
-            <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#lengthramp" aria-expanded="false" aria-controls="lengthramp">
-                Info
-            </button>
-            <div class="collapse" id="lengthramp">
-                <div class="well">
-                    <p>% of the Period you want to see appearing on the acquired images</p>
-                </div>
-            </div>
-            <input type="number" class="form-control" id="length_ramp" placeholder="Between 1 and 100" ng-model="data.settings.length_ramp" min="0" max="100" step="1">
-        </div>
-
-        <div class="form-group">
-            <label for="position_ramp">Position of the ramp</label>
-            <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#positionramp" aria-expanded="false" aria-controls="positionramp">
-                Info
-            </button>
-            <div class="collapse" id="positionramp">
-                <div class="well">
-                    <p>Position of the Ramp on the acquired signal (Used only if length of the ramp was set to anything else than 100%). It will define what part of the image you want to see (The first echoes or the last ones)</p>
-                </div>
-            </div>
-            <input type="number" class="form-control" id="position_ramp" placeholder="Between 1 and 100" ng-model="data.settings.position_ramp" min="0" max="100" step="1">
-        </div>
-
-        <div class="form-group">
-            <label for="nbrPix">Number of samples</label>
-            <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#nbr_Pix" aria-expanded="false" aria-controls="nbr_Pix">
-                Info
-            </button>
-            <div class="collapse" id="nbr_Pix">
-                <div class="well">
-                    <p>The number of saved points per lines. This number is a power of two (by exemple, if you set 3, you will have 2³ images, which means 8 pixels per lines)</p>
-                </div>
-            </div>
-            <select class="form-control" id="nbrPix" placeholder="Between 2 and 16384" ng-model="data.settings.nbrPix">
-                <option value="2">2</option>
-                <option value="4">4</option>
-                <option value="8">8</option>
-                <option value="16">16</option>
-                <option value="32">32</option>
-                <option value="64">64</option>
-                <option value="128">128</option>
-                <option value="256">256</option>
-                <option value="512">512</option>
-                <option value="1024">1024</option>
-                <option value="2048">2048</option>
-                <option value="4096">4096</option>
-                <option value="8192">8192</option>
-                <option value="16384">16384</option>
-            </select>
-        </div>
+   
+    <!---          decimation             -->
 
             <div class="form-group">
                 <label for="decimation">Decimation</label>
@@ -75,13 +12,126 @@
                 </button>
                 <div class="collapse" id="dcmtion">
                     <div class="well">
-                        <p>The Decimation is the number of ignored points you have between two saved points. This number will be a power of 8 (if you set it to 1, you will have 8¹ points between two saved points, which means 8 points between two saved points). The values of each saved points are averaged with the ignored ones</p>
+                        <p>The Decimation is the number of ignored points you have between two saved points. The values of each saved points are averaged with the ignored ones</p>
                     </div>
                 </div>
-                <input type="number" class="form-control" id="decimation" placeholder="Between 1 and 5" ng-model="data.settings.decimation" min="1" max="5" step="1">
+                <select class="form-control" id="decimation" placeholder="1 or 8" ng-model="data.settings.decimation">
+                     <option value="1" ng-click="deci_bool=0">1</option>
+                     <option value="8" ng-click="deci_bool=1">8</option>
+                </select>
             </div>
 
-            <div ng-show ="data.process == 'ko'"><button type="submit" class="btn btn-default right" ng-click ="data.setProcess()">Next</button></div>
+    <!---          Start of measurement             -->
+
+            <div class="form-group">
+                <label for="b_mesu">Start of measurement x<small>o</small></label>
+                <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#b_mesu" aria-expanded="false" aria-controls="b_mesu">
+                    Info
+                </button>
+                <div class="collapse" id="b_mesu">
+                    <div class="well">
+                        <p>The image is made between x<small>o</small> and x<small>f</small> (in mm)</p>
+                    </div>
+                </div>
+
+                <input ng-if="deci_bool" type="number" class="form-control" id="b_mesu" placeholder="Between 0 and 255" ng-model="data.settings.b_mesu" min="0" max="255" step="1" ng-click="b_mesu_ctrl" required>
+                <input ng-if="!deci_bool" type="number"  class="form-control" id="b_mesu" placeholder="Between 0 and 131" ng-model="data.settings.b_mesu" min="0" max="131" step="1" ng-click="b_mesu_ctrl" required>
+            </div>
+           
+    <!---          End of measurement             -->
+
+            <div class="form-group">
+                <label for="e_mesu">End of measurement x<small>f</small></label>
+                <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#e_mesu" aria-expanded="false" aria-controls="e_mesu">
+                    Info
+                </button>
+                <div class="collapse" id="e_mesu">
+                    <div class="well">
+                        <p>The image is made between x<small>o</small> and x<small>f</small> (in mm)</p>
+                    </div>
+                </div>
+                <input ng-if="deci_bool" type="number" class="form-control" id="e_mesu" placeholder="Between {{data.settings.b_mesu + 1}} and 255" ng-model="data.settings.e_mesu" min={{data.settings.b_mesu+1}} max="255" step="1" required>
+                <input ng-if="!deci_bool" type="number" class="form-control" id="e_mesu" placeholder="Between {{data.settings.b_mesu+1}} and 131" ng-model="data.settings.e_mesu" min={{data.settings.b_mesu+1}} max="131" step="1" required>
+            </div> 
+    <!---          Value of the ramp - beginning             -->
+
+            <div class="form-group">
+                <label for="d_ramp">Value of the ramp at the beginning</label>
+                <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#d_ramp" aria-expanded="false" aria-controls="d_ramp">
+                    Info
+                </button>
+                <div class="collapse" id="d_ramp">
+                    <div class="well">
+                        <p>The ramp drives the TGC (VGA): at 0 there is no amplification, 1 is the  amplification maximum</p>
+                    </div>
+                </div>
+                <input type="number" class="form-control" id="d_ramp" placeholder="Between 0 and 255" ng-model="data.settings.d_ramp" min="0" max="255" step="1" required>
+            </div>
+
+
+    <!---          Value of the ramp - end             -->
+
+            <div class="form-group">
+                <label for="e_ramp">Value of the ramp at the end</label>
+                <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#e_ramp" aria-expanded="false" aria-controls="e_ramp">
+                    Info
+                </button>
+                <div class="collapse" id="e_ramp">
+                    <div class="well">
+                        <p>The ramp drives the TGC (VGA): at 0 there is no amplification, 1 is the  amplification maximum</p>
+                    </div>
+                </div>
+                <input type="number" class="form-control" id="e_ramp" placeholder="Between {{data.settings.d_ramp + 1}} and 255" ng-model="data.settings.e_ramp" min="{{data.settings.d_ramp + 1}}" max="255" step="1" required>
+            </div>
+
+    <!---          Angle of the sector            -->
+            
+            <div class="form-group">
+                <label for="angle">Angle of the sector</label>
+                <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#angle" aria-expanded="false" aria-controls="angle">
+                    Info
+                </button>
+                <div class="collapse" id="angle">
+                    <div class="well">
+                        <p>Total angle of the image</p>
+                    </div>
+                </div>
+                <input type="number" class="form-control" id="angle" placeholder="Between 1 and 180" ng-model="data.settings.angle" min="1" max="180" step="1" required>
+            </div>
+
+    <!---          number of lines            -->
+        
+            <div class="form-group">
+                <label for="nb_lin">Number of lines</label>
+                <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#nb_lin" aria-expanded="false" aria-controls="nb_lin">
+                    Info
+                </button>
+                <div class="collapse" id="nb_lin">
+                    <div class="well">
+                        <p>Number of lines isnt it?</p>
+                    </div>
+                </div>
+                <input type="number" class="form-control" id="nb_lin" placeholder="Between 1 and 255" ng-model="data.settings.nb_lin" min="1" max="255" step="1" required>
+            </div>
+
+
+    <!---          number of images           -->
+
+            <div class="form-group">
+                <label for="nb_img">Number of images</label>
+                <button class="btn btn-info btn-xs btn-rnd" type="button" data-toggle="collapse" data-target="#nb_img" aria-expanded="false" aria-controls="nb_img">
+                    Info
+                </button>
+                <div class="collapse" id="nb_img">
+                    <div class="well">
+                        <p>The number of images. Obviously.</p>
+                    </div>
+                </div>
+                <input type="number" class="form-control" id="nb_img" placeholder="Between 1 and 50" ng-model="data.settings.nb_img" min="1" max="50" step="1" required>
+            </div>
+
+
+            <div ng-show ="data.process == 'ko'"><button type="submit" class="btn btn-primary col-xs-12" ng-click ="data.setProcess()">Next</button></div>
             <div ng-show ="data.process == 'ok'" class="btn btn-default right">Processing ... please wait a few seconds.</div>
     </form>
 </div>

@@ -2,11 +2,14 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Settings = new Schema ({
-    nbr_img : Number,
-    length_ramp : Number,
-    position_ramp : Number,
-    nbrPix : Number,
-    decimation : Number
+    decimation : Number,
+    b_mesu : Number,
+    e_mesu : Number,
+    d_ramp : Number,
+    e_ramp : Number,
+    angle : Number,
+    nb_lin : Number,
+    nb_img : Number
 
 });
 module.exports = mongoose.model('Settings', Settings);

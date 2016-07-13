@@ -2,11 +2,11 @@ angular.module('app')
     .controller('DataController', function($scope, $http, $location, $route, $window) {
         var _this = this;
         this.process = "ko";
-
+ 
         /** @brief set process variable for the time between the sendSettings and getData functions
          @param no param
          @return no return */
-        this.setProcess = function (){
+        /*this.setProcess = function (){
             $scope.data.process = 'ok';
         };
 
@@ -40,7 +40,7 @@ angular.module('app')
          @param object settings : all the parameters entered by the user or set it by default
          @return no return */
         this.sendSettings = function(){
-            if(!this.settings.nbr_img){
+            /*if(!this.settings.nbr_img){
                 this.settings.nbr_img = 1;
             }
 
@@ -58,7 +58,8 @@ angular.module('app')
 
             if(!this.settings.decimation){
                 this.settings.decimation = 1;
-            }
+            }*/
+
 
             $http.post('/api/sendSettings', this.settings);
             $http.get('/api/receive').then(function(res){

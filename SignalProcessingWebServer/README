@@ -1,0 +1,13 @@
+READ ME
+
+SignalprocessingWebServer
+
+npm install to install node dependencies
+
+bower install to install bower dependencies in .bowerrc
+
+launch mongod.exe in order to activate mongo db
+then launch mongo.exe
+write "use echopen" to use or create a db called echopen.
+
+finally, go to kitsoft/SignalProcessingWebServer  and write "node server", server will be available on localhost:3700 

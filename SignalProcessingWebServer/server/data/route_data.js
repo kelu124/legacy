@@ -42,7 +42,7 @@ module.exports = function(app) {
      @return return nothing */
     app.get('/api/:id/sendImages',function(req,res){
         Data.findById(req.params.id,function(err, datum) {
-    	    var images= 0;
+    	   // var images= 0;
     	    var images = datum.images,
                 file = fs.createWriteStream("./public/img.txt");
     	    file.write(images[0]);
