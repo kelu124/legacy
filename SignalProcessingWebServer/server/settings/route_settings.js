@@ -73,19 +73,20 @@ net.createServer(function (socket) {
 
      app.post('/api/sendSettings', function(req, res) {
 
-            var settings = req.body
-            var decimation,
-                b_mesu,
-                e_mesu,
-                d_ramp,
-                e_ramp,
-                angle,
-                nb_lin,
-                nb_img;
+            var settings = req.body;
+            var decimation = settings.decimation;
+			var b_mesu = settings.b_mesu;
+			var e_mesu = settings.e_mesu;
+			var d_ramp = settings.d_ramp;
+			var e_ramp = settings.e_ramp;
+			var angle = settings.angle;
+			var nb_lin = settings.nb_lin;
+			var nb_img = settings.nb_img;
+           
            
        
             var input = decimation + b_mesu + e_mesu + d_ramp + e_ramp + angle + nb_lin + nb_img;
-    //console.log(nbrPix);
+    console.log(input);
 
          socket.write(input);
             });
