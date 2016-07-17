@@ -52,7 +52,31 @@ server will be available on localhost:3700
 
 ## Contributors
 
-* Mathieu Regnier
 * https://github.com/ydre
+* https://github.com/morphus121
+* Mathieu Regnier
+
+
+### if u have some problems with mongod ###
+
+look if u have the rights to use the files in /data/db.
+
+then in /data/db/ repertory:
+
+```
+sudo rm mongod.lock
+```
+
+and rm everything else except  /journal.
+
+u may have to type : 
+```
+export lc_all=c
+```
+Finally, type :
+```
+sudo mongod --smallfiles
+```
+
 
 
