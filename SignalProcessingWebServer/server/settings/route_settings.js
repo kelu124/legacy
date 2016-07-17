@@ -31,7 +31,7 @@ net.createServer(function (socket) {
         });
 
     /*  creation of the 2d array */
-        var NbPix = 8;
+        var nbPix = 8;
         var len = 64;
         grille = new Array();
 
