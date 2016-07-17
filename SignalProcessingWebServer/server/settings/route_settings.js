@@ -34,14 +34,28 @@ net.createServer(function (socket) {
         var NbPix = 8;
         var len = 64;
         grille = new Array();
+
         for(i = 0; i < nbPix; i++){
+            grille[i] = new Array();
+            fs.appendFile('./public/img.txt', '\n');
+                for(var j=0 ; j < len; j++){
+                   grille[i][j]= data[i+(j*nbPix)];
+                    if(!isNaN(grille[i][j])){
+                        fs.appendFile('./public/img.txt',  grille[i][j]+ " ", function(err){
+                          if(err){console.log(err)};
+                          });
+                      }  
+                };
+        };
+
+      /*  for(i = 0; i < nbPix; i++){
             grille[i] = new Array();
                 for(var j=0 ; j < len; j++){
         	       grille[i][j]= data[i+(j*nbPix)]; 
                 };
         };
     /*  lets write on it              */
-        for(var i=0; i < nbPix; i++){
+      /*  for(var i=0; i < nbPix; i++){
             fs.appendFile('./public/img.txt', '\n');
             for(var j=0; j < len; j++){
             	if(!isNaN(grille[i][j])){
@@ -51,7 +65,7 @@ net.createServer(function (socket) {
 
             	}
             };
-        };
+        };*/
 
       });
 

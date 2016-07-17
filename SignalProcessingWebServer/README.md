@@ -61,7 +61,7 @@ server will be available on localhost:3700
 
 look if u have the rights to use the files in /data/db.
 
-then :
+then in /data/db/ repertory:
 
 ```
 sudo rm mongod.lock
