@@ -57,4 +57,7 @@ In addition to classical packages, these tools are installed
 
 - scipy
 
+- scikit-image
+
+- scikit-learn
 
