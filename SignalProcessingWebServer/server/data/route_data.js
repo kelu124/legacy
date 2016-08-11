@@ -42,15 +42,13 @@ module.exports = function(app) {
      @return return nothing */
     app.get('/api/:id/sendImages',function(req,res){
         Data.findById(req.params.id,function(err, datum) {
-    	     var images= 0
-	    if(err){console.log(err);};
-    	     images = datum.images;
-            file = fs.createWriteStream("./public/img.txt");
-    	    if(images){
-		file.write(images[0]);
-    		file.close();
-		      };
-	});
+    	    if(err){console.log(err);};
+        	/*var images = datum.images;
+            file = fs.createWriteStream("./public/img.txt");      	   
+    		file.write(images[0]);
+        	file.close();*/     
+    	});
+        res.end();
     });
 
     /** @brief download the images in the browser client of user
