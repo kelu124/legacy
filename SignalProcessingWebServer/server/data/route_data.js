@@ -43,11 +43,14 @@ module.exports = function(app) {
     app.get('/api/:id/sendImages',function(req,res){
         Data.findById(req.params.id,function(err, datum) {
     	    if(err){console.log(err);};
-        	/*var images = datum.images;
-            file = fs.createWriteStream("./public/img.txt");      	   
-    		file.write(images[0]);
-        	file.close();*/     
+    	    if(datum){
+	        	var images = datum.images;
+	            file = fs.createWriteStream("./public/img.txt");      	   
+	    		file.write(images[0]);
+	        	file.close();   
+    		};
     	});
+
         res.end();
     });
 
