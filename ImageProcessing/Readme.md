@@ -7,7 +7,14 @@ We choose to share our passion with you guys and so to develop together on the s
 ### Preparing your workspace
 To get a credential, send us an email to the address nowami@echopen.org. We will deploy for you an VM instance, which consists in a repo with data input, classic pre-installed packages,  and some routines code. Your code will happen in the `/home/ubuntu/workspace/` directory, which is on a git source control system. The central repo is here [https://github.com/echopen/kit-soft]. 
 
-** `kit-soft` repo contains a lot of tools, here we only need the `Cloud9Tools` directory, so do not be surprised finding this very and only directory on your local Cloud9. We used a git's sparse checkout trick to do that **
+** `kit-soft` repo contains a lot of tools, here we only need the `ImageProcessing` directory, so do not be surprised finding this very and only directory on your local Cloud9. We used a git's sparse checkout trick to do that. Here's how **
+	Supposing, you run the command from `/home/ubuntu/workspace/my_user_name`
+
+	`git remote add origin https://bitbucket.org/blah/blah`
+	`git init`
+	`git config core.sparsecheckout true`
+	`echo "ImageProcessing/*" > .git/info/sparse-checkout`
+	`git pull origin master`
 
 For the community to benefit from your insights, you’ll have to create a custom branch in the format `your_name`.
 
