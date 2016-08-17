@@ -1,4 +1,4 @@
-efrom filereader import FileReader
+from filereader import FileReader
 from scanconverter import ScanConverter
 
 __author__ = 'mehdibenchoufi'
