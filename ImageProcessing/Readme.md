@@ -7,6 +7,8 @@ We choose to share our passion with you guys and so to develop together on the s
 ### Preparing your workspace
 To get a credential, send us an email to the address nowami@echopen.org. We will deploy for you an VM instance, which consists in a repo with data input, classic pre-installed packages,  and some routines code. Your code will happen in the `/home/ubuntu/workspace/` directory, which is on a git source control system. The central repo is here [https://github.com/echopen/kit-soft]. 
 
+First things first, create your workspace with the help of your username, in the following format ```/home/ubuntu/workspace/my_user_name``
+
 ** `kit-soft` repo contains a lot of tools, here we only need the `ImageProcessing` directory, so do not be surprised finding this very and only directory on your local Cloud9. We used a git's sparse checkout trick to do that. Here's how **
 	Supposing, you run the command from `/home/ubuntu/workspace/my_user_name`
 
@@ -22,14 +24,15 @@ For the community to benefit from your insights, you’ll have to create a custo
 
 ### Where to get images
 
-The images are available in the input folder `/home/ubuntu/ImageProcessing/Cloud9Tools/scanconversion/data`, in `csv` format. Images are present in scan converted format under the subfolder `scan_converted`  and `raw` images are available under the subfolder `raw`
+The images are available in the input folder `/home/ubuntu/*my_user_name*/ImageProcessing/scanconversion/data`, in `csv` format.
 
 ### To submit
 
-The output should be provided in scan converted format and stored in  `/home/ubuntu/ImageProcessing/output`
+The output should be provided in scan converted format and stored in  `/home/ubuntu/workspace/*my_user_name*/ImageProcessing/output`
 
-If you run the the `run()` method, then your code is compiled.
-When you run the `run_and_summit()`, your code is compiled, a script stress-tests it and the performance KPIs update a leaderboard on our website.
+You should provide a `run()` method. If you run the `run()` method, then your code gets the input image, process it and throws an output denoised image. 
+
+The `main()` method triggers the `run()` method. On our side, a script stress-testsyour code and the performance KPIs update a leaderboard on our website.
 
 All code are opened to your contribution and improvement 😉
 
