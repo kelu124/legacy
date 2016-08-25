@@ -89,6 +89,6 @@ to use it.
 
 ## Contributors
 
-* https://github.com/ydre
-* https://github.com/morphus121
-* Mathieu Regnier
+* [ydre](https://www.google.com)https://github.com/ydre)
+* [morphus121](https://github.com/morphus121)
+* [Mathieu Regnier](https://github.com/Regnier-Mathieu)
