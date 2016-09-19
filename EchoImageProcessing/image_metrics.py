@@ -9,6 +9,7 @@ image_file_name2 = sys.argv[2]
 image_name1 = io.imread(image_file_name1)
 image_name2 = io.imread(image_file_name2)
 
+
 print image_name1.shape
 print image_name2.shape
 
@@ -23,9 +24,9 @@ print ("std is %2.10f"%std_1)
 
 #estimate the peak signal to noise ratio (PSNR) between the image
 
-peak_signal_to_noise_ratio = measure.compare_psnr (image_name1,image_name2)
+peak_signal_to_noise_ratio = measure.compare_psnr(image_name1,image_name2)
 
-print ("Peak signal to noise ratio is %s"%peak_signal_to_noise_ratio)
+print ("Peak signal to noise ratio is %s" %peak_signal_to_noise_ratio)
 
 # estimate the mean square error between the images
 
@@ -38,3 +39,9 @@ print  ("Mean square error between the images is %s"%mse)
 rmse = measure.compare_nrmse(image_name1,image_name2)
 
 print  ("Normalised root mean squre error between the images is %s"%rmse)
+
+
+
+
+if __name__ == '__main__':
+    print('test')
