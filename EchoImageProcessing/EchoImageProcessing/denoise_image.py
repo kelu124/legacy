@@ -12,7 +12,7 @@ def denoise_image(input, output):
     io.imsave(output,kidney_image_denoised_tv)
 
 
-if __name__ == '__main__' :
+def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbosity", type=str,
@@ -27,3 +27,7 @@ if __name__ == '__main__' :
     args = parser.parse_args()
 
     denoise_image(args.input, args.output)
+
+
+if __name__ == '__main__':
+    main()

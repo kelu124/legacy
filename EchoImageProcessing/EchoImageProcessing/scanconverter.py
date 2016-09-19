@@ -58,7 +58,7 @@ class ScanConverter:
         self.converter(filereader, output)
 
 
-if __name__ == '__main__':
+def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbosity", type=str,
@@ -75,3 +75,7 @@ if __name__ == '__main__':
     file_reader = FileReader(args.input)
     scanconversion = ScanConverter(file_reader)
     scanconversion.convert(file_reader, args.output)
+
+
+if __name__ == '__main__':
+    main()

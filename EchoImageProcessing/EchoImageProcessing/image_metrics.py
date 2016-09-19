@@ -47,7 +47,8 @@ def get_denoise_metrics(input, output, report):
     resp.write("Normalised root mean squre error between the images is %s \n" %rmse)
     resp.close()
 
-if __name__ == '__main__' :
+
+def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbosity", type=str,
@@ -67,3 +68,7 @@ if __name__ == '__main__' :
     args = parser.parse_args()
 
     get_denoise_metrics(args.input, args.output, args.report)
+
+    
+if '__main__' == __name__ :
+    main()
