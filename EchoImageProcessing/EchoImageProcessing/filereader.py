@@ -3,6 +3,7 @@ __author__ = 'mehdibenchoufi'
 import csv
 import os
 
+
 class FileReader:
 
     def __init__(self, name_file):

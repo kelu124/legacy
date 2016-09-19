@@ -1,5 +1,6 @@
 __author__ = 'mehdibenchoufi'
 
+
 class Constants:
     IMAGE_SIZE_x = 512
     IMAGE_SIZE_z = 512

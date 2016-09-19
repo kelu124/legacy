@@ -1,7 +1,8 @@
 __author__ = 'mehdibenchoufi'
 
-from constants import Constants
+from .constants import Constants
 import numpy as np
+
 
 class Data:
 
@@ -14,8 +15,8 @@ class Data:
     def get_larger_rows(self):
         return self.larger_rows
 
-    def set_larger_rows (self, value):
-        self.larger_rows  = value
+    def set_larger_rows(self, value):
+        self.larger_rows = value
 
     def get_cols(self):
         return self.cols
@@ -23,7 +24,7 @@ class Data:
     def set_cols(self, value):
         self.cols = value
 
-    def __init__(self, num_args = None):
+    def __init__(self, num_args=None):
         if num_args is None:
             self.set_rows(Constants.NUM_IMG_DATA)
             self.set_larger_rows(Constants.OPENCV_RELATIVE_ANGLE)
@@ -41,11 +42,10 @@ class Data:
         self.dest_size = self.larger_rows, self.cols
 
     def get_src(self):
-       return np.zeros(self.src_size, dtype=np.uint8)
+        return np.zeros(self.src_size, dtype=np.uint8)
 
     def get_intermediate_src(self):
         return np.zeros(self.intermediate_size, dtype=np.uint8)
 
     def get_destination(self):
         return np.zeros(self.dest_size, dtype=np.uint8)
-

@@ -1,4 +1,6 @@
-import os,sys, argparse
+import os
+import sys
+import argparse
 from skimage import io
 from skimage import filter
 from skimage import restoration
@@ -6,10 +8,11 @@ from skimage import restoration
 
 def denoise_image(input, output):
     kidney_image = io.imread(input)
-    #estimate the noise in the image
+    # estimate the noise in the image
     # do a test denosing using a total variation filter
-    kidney_image_denoised_tv = restoration.denoise_tv_chambolle(kidney_image, weight=0.1)
-    io.imsave(output,kidney_image_denoised_tv)
+    kidney_image_denoised_tv = restoration.denoise_tv_chambolle(
+        kidney_image, weight=0.1)
+    io.imsave(output, kidney_image_denoised_tv)
 
 
 def main():
