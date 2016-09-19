@@ -3,8 +3,9 @@ __author__ = 'mehdibenchoufi'
 from filereader import FileReader
 from data import Data
 from constants import Constants
+from filereader import FileReader
+
 import cv2
-import cv
 
 class ScanConverter:
 
@@ -52,3 +53,10 @@ class ScanConverter:
                 self.input[i,j] = filereader.pixel_array[i*cols+j]
                 self.intermediate_input[i,j] = filereader.pixel_array[i*cols+j]
         self.converter(filereader)
+
+
+
+if __name__ == '__main__':
+    file_reader = FileReader('data_kydney')
+    scanconversion = ScanConverter(file_reader)
+    scanconversion.convert(file_reader)
