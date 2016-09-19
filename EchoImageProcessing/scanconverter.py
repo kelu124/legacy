@@ -2,9 +2,9 @@ __author__ = 'mehdibenchoufi'
 
 from filereader import FileReader
 from data import Data
-from constants import constants
+from constants import Constants
 import cv2
-
+import cv
 
 class ScanConverter:
 
@@ -38,7 +38,7 @@ class ScanConverter:
         self.set_output(data.get_destination())
 
     def converter(self, filereader):
-        cv2.linearPolar(self.intermediate_input, (constants.CENTER_POINT_x,constants.CENTER_POINT_z), constants.SCAN_CONVERTER_SCALE, cv2.INTER_CUBIC + cv2.WARP_INVERSE_MAP, self.output)
+        cv2.linearPolar(self.intermediate_input, (Constants.CENTER_POINT_x,Constants.CENTER_POINT_z), Constants.SCAN_CONVERTER_SCALE, cv2.INTER_CUBIC + cv2.WARP_INVERSE_MAP, self.output)
         cv2.imwrite('color_img.jpg', self.output)
         cv2.imshow('image',self.output)
         cv2.waitKey(0)

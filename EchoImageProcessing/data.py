@@ -1,6 +1,6 @@
 __author__ = 'mehdibenchoufi'
 
-import constants
+from constants import Constants
 import numpy as np
 
 class Data:
@@ -25,9 +25,9 @@ class Data:
 
     def __init__(self, num_args = None):
         if num_args is None:
-            self.set_rows(constants.NUM_IMG_DATA)
-            self.set_larger_rows(constants.OPENCV_RELATIVE_ANGLE)
-            self.set_cols(constants.NUM_SAMPLES)
+            self.set_rows(Constants.NUM_IMG_DATA)
+            self.set_larger_rows(Constants.OPENCV_RELATIVE_ANGLE)
+            self.set_cols(Constants.NUM_SAMPLES)
             self.set_dimension()
         else:
             self.set_rows(num_args[0])
