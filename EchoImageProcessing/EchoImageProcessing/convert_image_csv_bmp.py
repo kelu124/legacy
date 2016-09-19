@@ -1,8 +1,9 @@
-from filereader import FileReader
-from scanconverter import ScanConverter
+from .filereader import FileReader
+from .scanconverter import ScanConverter
 
 
 __author__ = 'mehdibenchoufi'
+
 
 def run():
     file_reader = FileReader("kidney_data.csv")
@@ -10,4 +11,3 @@ def run():
     scanconversion.convert(file_reader)
 
 run()
-  

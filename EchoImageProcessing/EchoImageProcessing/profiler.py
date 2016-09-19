@@ -2,6 +2,7 @@ __author__ = 'mehdibenchoufi'
 
 import time
 
+
 class Profiler(object):
 
     def __init__(self):
