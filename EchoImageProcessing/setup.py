@@ -1,9 +1,9 @@
 __author__ = 'mehdibenchoufi'
 from setuptools import setup, find_packages
 setup(
-    name='EchoImageProcessing',
+    name='ImageProcessing',
     version='0.1',
-    description='echography image processing',
+    description='image_processing',
     classifiers=[
         "Programming Language :: Python",
     ],
@@ -11,15 +11,8 @@ setup(
     install_requires=[
         'scikit-image',
         'numpy',
+        'cv2'
     ],
-    entry_points={
-        'console_scripts': [
-            'image_metrics=EchoImageProcessing.image_metrics:main',
-            'scanconverter=EchoImageProcessing.scanconverter:main',
-            'denoise_image=EchoImageProcessing.denoise_image:main', 
-        ],
-    },
-
 )
 
 
