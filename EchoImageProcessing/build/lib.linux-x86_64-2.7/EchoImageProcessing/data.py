@@ -1,6 +1,6 @@
 __author__ = 'mehdibenchoufi'
 
-from .constants import Constants
+from constants import Constants
 import numpy as np
 
 

@@ -1,12 +1,32 @@
 __author__ = 'mehdibenchoufi'
 
 import argparse
-from .filereader import FileReader
-from .data import Data
-from .constants import Constants
-from .filereader import FileReader
+from filereader import FileReader
+from data import Data
+from constants import Constants
+from filereader import FileReader
 
 import cv2
+
+
+
+def execution():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-v", "--verbosity", type=str,
+                        help="increase output verbosity")
+
+    parser.add_argument("-i", "--input", type=str, default="data_kidney",
+                        help="input")
+
+    parser.add_argument("-o", "--output", type=str, default='data_kidney.jpg',
+                        help="output")
+
+    args = parser.parse_args()
+
+    file_reader = FileReader(args.input)
+    scanconversion = ScanConverter(file_reader)
+    scanconversion.convert(file_reader, args.output)
 
 
 class ScanConverter:
@@ -64,24 +84,4 @@ class ScanConverter:
         self.converter(filereader, output)
 
 
-def main():
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--verbosity", type=str,
-                        help="increase output verbosity")
-
-    parser.add_argument("-i", "--input", type=str, default="data_kidney",
-                        help="input")
-
-    parser.add_argument("-o", "--output", type=str, default='data_kidney.jpg',
-                        help="output")
-
-    args = parser.parse_args()
-
-    file_reader = FileReader(args.input)
-    scanconversion = ScanConverter(file_reader)
-    scanconversion.convert(file_reader, args.output)
-
-
-if __name__ == '__main__':
-    main()
