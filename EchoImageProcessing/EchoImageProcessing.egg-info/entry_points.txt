@@ -1,5 +1,5 @@
 [console_scripts]
 denoise_image = EchoImageProcessing.denoise_image:main
 image_metrics = EchoImageProcessing.image_metrics:main
-scanconverter = EchoImageProcessing.scanconverter:main
+scanconverter = EchoImageProcessing.scanconverter:execution
 
