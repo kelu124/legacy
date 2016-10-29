@@ -20,40 +20,6 @@ from skimage import restoration
 from skimage import measure
 import time
 
-def score(input, output):
-
-    image_file_name1 = input
-    image_file_name2 = output
-
-    image_name1 = io.imread(image_file_name1)
-    image_name2 = io.imread(image_file_name2)
-
-    # estimate the standard deiviation of the images
-
-    std_1 = numpy.std(numpy.std(numpy.array(image_name1)))
-    std_2 = numpy.std(numpy.std(numpy.array(image_name2)))
-
-
-    # print ("Standard deviation of the images are"%(std_1,std_2))
-
-    # estimate the peak signal to noise ratio (PSNR) between the image
-
-    peak_signal_to_noise_ratio = measure.compare_psnr(image_name1, image_name2)
-
-
-    # estimate the mean square error between the images
-
-    mse = measure.compare_mse(image_name1, image_name2)
-
-
-    # estimate the normalised root mean square error between the images
-
-    rmse = measure.compare_nrmse(image_name1, image_name2)
-
-
-    score = rmse+mse+peak_signal_to_noise_ratio
-    return {'rmse':rmse,'mse':mse,'peak_signal_to_noise_ratio': peak_signal_to_noise_ratio, 'score':score}
-
 
 
 
@@ -106,66 +72,70 @@ class LeaderboardView(FormView):
     form_class = FilesForm
 
     def get_context_data(self, **kwargs):
-
         context = super(LeaderboardView, self).get_context_data(**kwargs)
         context['layout'] = self.request.GET.get('layout', 'vertical')        
         context['object']= self.model
         return context
 
+    def execute_upload(self,request):
+                import uuid
+                form = self.form_class(request.POST, request.FILES)
+                if  form.is_valid():
+                    resp = self.handle_uploaded_file(request.FILES['file'])
+
+                    if resp['score'] < 100 :
+                        button_type = 'btn-warning'
+                    else:
+                        button_type = 'btn-success'
+                    self.uuid_index  = str(uuid.uuid4())
+                    id = self.uuid_index
+
+                    resp['score']= random.randint(1, 100)
+
+                    model = Algorithm
+
+                    run_rank = model.objects.filter(rating__gt=int(resp['score'])).order_by('ranking')
+                    if len(run_rank) > 0:
+                        rankobj = run_rank.last()
+                        rank = rankobj.ranking + 1
+
+                    else:
+                        rank = 1
+
+                    run_rank_low = model.objects.filter(rating__lte=int(resp['score']))
+                    if len(run_rank_low) > 0 :
+                        for i in run_rank_low:
+                            print(i.ranking, i.rating)
+                            i.ranking += 1
+                            i.save()
+
+                    else:
+                        pass
+
+                    b = Algorithm(run_id= id, name=''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10)), ranking = rank, rating=resp['score'], button = button_type, time= resp['duration'], cpu=18)
+                    b.save()
+
+                    resp = model.objects.order_by('-rating')
+                    values = resp.values('run_id')
+                    for ind, item  in enumerate(values) :
+                        if (item['run_id']) == self.uuid_index :
+                            paging =  divmod(ind+1, 5)[0]
+
+                    return HttpResponseRedirect('/leaderboard?q=foo&flop=flip&page='+str(paging+1))
+
+                else:
+                    render(request, self.template_name, {'form': form})
+
+
+                return render(request, self.template_name, {'form': form})
+
+
     def post(self, request, *args, **kwargs):
-            form = self.form_class(request.POST, request.FILES)
-            import uuid
-            if form.is_valid():
-
-                resp = self.handle_uploaded_file(request.FILES['file'])
-
-                if resp['score'] < 100 :
-                    button_type = 'btn-warning'
-                else:
-                    button_type = 'btn-success'
-                self.uuid_index  = str(uuid.uuid4())
-                id = self.uuid_index
-
-                resp['score']= random.randint(1, 100)
-
-                model = Algorithm
-
-                run_rank = model.objects.filter(rating__gt=int(resp['score'])).order_by('ranking')
-                if len(run_rank) > 0:
-                    rankobj = run_rank.last()
-                    rank = rankobj.ranking + 1
-
-                else:
-                    rank = 1
-
-                run_rank_low = model.objects.filter(rating__lte=int(resp['score']))
-                if len(run_rank_low) > 0 :
-                    for i in run_rank_low:
-                        print(i.ranking, i.rating)
-                        i.ranking += 1
-                        i.save()
-
-                else:
-                    pass
-
-
-                b = Algorithm(run_id= id, name=''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10)), ranking = rank, rating=resp['score'], button = button_type, time= resp['duration'], cpu=18)
-                b.save()
-
-
-                resp = model.objects.order_by('-rating')
-                values = resp.values('run_id')
-                for ind, item  in enumerate(values) :
-                    if (item['run_id']) == self.uuid_index :
-                        paging =  divmod(ind+1, 5)[0]
-                
-                return HttpResponseRedirect('/leaderboard?q=foo&flop=flip&page='+str(paging+1))
-
-            else:
-                render(request, self.template_name, {'form': form})
-
-
-            return render(request, self.template_name, {'form': form})
+        import threading
+        self.execute_upload(request)
+        #t = threading.Thread(target=self.execute_upload, args=(request))
+        #t.start()
+        return HttpResponseRedirect('/leaderboard?q=foo&flop=flip&page=1')
 
 
     def get(self, request, *args, **kwargs):
