@@ -1,4 +1,4 @@
-# Bootcamp
+# Leaderboard
 
 [![Build Status](https://travis-ci.org/vitorfs/bootcamp.svg?branch=master)](https://travis-ci.org/vitorfs/bootcamp)
 
