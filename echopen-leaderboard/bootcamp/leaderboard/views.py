@@ -94,7 +94,7 @@ class LeaderboardView(FormView):
                     else:
                         button_type = 'btn-success'
                     self.uuid_index  = str(uuid.uuid4())
-                    id = self.uuid_index
+
 
                     resp['score']= random.randint(1, 100)
 
@@ -118,7 +118,7 @@ class LeaderboardView(FormView):
                     else:
                         pass
 
-                    b = Algorithm(run_id= id, name=''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10)), ranking = rank, rating=resp['score'], button = button_type, time= resp['duration'], cpu=18)
+                    b = Algorithm(run_id= self.uuid_index, name=request.user.username, ranking = rank, rating=resp['score'], button = button_type, time= resp['duration'], cpu=18)
                     b.save()
 
                     resp = model.objects.order_by('-rating')

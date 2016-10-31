@@ -34,7 +34,7 @@
     </thead>
       {% for r in object %}
       <td width="20%">{{r.process_date}}</td>
-      <td width="10%">{{r.name}}</td>
+      <td width="10%"><a href="/{{r.name}}" class="btn btn-info" role="button">{{r.name}}</a></td>
       <td width="10%">{{r.ranking}}</td>
       <td width="10%">{{r.rating}}</td>
       <td width="10%">{{r.time}}</td>
