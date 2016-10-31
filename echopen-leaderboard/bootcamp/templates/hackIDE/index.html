@@ -48,7 +48,7 @@
                     <div class="lang-choose">
                         <select class="form-control" name="lang" id="lang">
                             <option value="C">C (gcc 4.8.1)</option>
-                            <option value="CPP" selected>C++ (g++ 4.8.1)</option>
+                            <option value="CPP" >C++ (g++ 4.8.1)</option>
                             <option value="CSHARP">C#</option>
                             <option value="CLOJURE">Clojure (clojure 1.1.0)</option>
                             <option value="CSS">CSS</option>
@@ -58,7 +58,7 @@
                             <option value="OBJECTIVEC">Objective-C (clang 3.3)</option>
                             <option value="PERL">Perl (perl 5.14.2)</option>
                             <option value="PHP">PHP (php 5.3.10)</option>
-                            <option value="PYTHON">Python (python 2.7.3)</option>
+                            <option value="PYTHON" selected>Python (python 2.7.3)</option>
                             <option value="R">R (RScript 2.14.1)</option>
                             <option value="RUBY">Ruby (ruby 2.1.1)</option>
                             <option value="RUST">Rust (rustc 1.4.0)</option>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="pull-right run-save-panel">
                     <span id='copy_code'></span>
-                    <button class="btn btn-success" id="run-code" data-toggle="tooltip" data-placement="top" title="Press Ctrl+Enter">Hack(run) it!</button>
+                    <button class="btn btn-success" id="run-code" data-toggle="tooltip" data-placement="top" title="Press Ctrl+Enter">Submit !</button>
                 </div>
             </div>
         </div>
@@ -162,7 +162,6 @@
     </div>
     <!-- END of container -->
     <footer class="container">
-        <span class="pull-left"> Powered by <a href="https://www.hackerearth.com/docs/api/developers/code/v3/" target="_blank">HackerEarth API</a> </span>
         <span class="pull-right"> Copyrights © <a href="http://sahildua.com" target="_blank">Sahil Dua</a> 2016 | Made with <span style="color: #f7403a">&hearts;</span> in India </span>
     </footer>
     <a href="https://github.com/sahildua2305/hackIDE" title="Fork me on GitHub" class="github-corner" target="_blank">
@@ -240,11 +239,5 @@
     document.write("<sc" + "ript type='text/javascript' src='" +
         scJsHost + "statcounter.com/counter/counter.js'></" + "script>");
     </script>
-    <noscript>
-        <div class="statcounter">
-            <a title="site stats" href="http://statcounter.com/" target="_blank"><img class="statcounter" src="http://c.statcounter.com/9940142/0/b0991b09/1/" alt="site stats"></a>
-        </div>
-    </noscript>
-    <!-- End of StatCounter Code for Default Guide -->
 </body>
 {% endblock main %}

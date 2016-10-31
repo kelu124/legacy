@@ -39,10 +39,10 @@
                   </a>
                 </li>
                 <li><a href="{% url 'leaderboard' %}">{% trans 'Leaderboard' %}</a></li>
-                <li><a href="{% url 'feeds' %}">{% trans 'Feeds' %}</a></li>
-                <li><a href="{% url 'questions' %}">{% trans 'Q&A' %}</a></li>
-                <li><a href="{% url 'network' %}">{% trans 'Network' %}</a></li>
                 <li><a href="{% url 'hackIDE' %}">{% trans 'IDE' %}</a></li>
+                <li><a href="{% url 'feeds' %}">{% trans 'Feeds' %}</a></li>
+                <li><a href="{% url 'network' %}">{% trans 'Network' %}</a></li>
+                <li><a href="{% url 'questions' %}">{% trans 'Q&A' %}</a></li>
               </ul>
               {% if not hide_search %}
                 <form class="navbar-form navbar-left" role="search" action="{% url 'search' %}">
