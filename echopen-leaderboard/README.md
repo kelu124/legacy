@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/vitorfs/bootcamp.svg?branch=master)](https://travis-ci.org/vitorfs/bootcamp)
 
-Bootcamp is an open source **enterprise social network** built with [Python][0] using the [Django Web Framework][1].
+Leaderboard is based on Bootcamp which is an open source **enterprise social network** built with [Python][0] using the [Django Web Framework][1].
+
+## Bootcamp 
 
 The project has three basic apps:
 
@@ -10,22 +12,22 @@ The project has three basic apps:
 * Articles (A collaborative blog)
 * Question & Answers (A Stack Overflow-like platform)
 
-## Feed App
+### Feed App
 
 The Feed app has infinite scrolling, activity notifications, live updates for likes and comments, and comment tracking.
 
 
-## Articles App
+### Articles App
 
 The Articles app is a basic blog, with articles pagination, tag filtering and draft management.
 
 
-## Question & Answers App
+### Question & Answers App
 
 The Q&A app works just like Stack Overflow. You can mark a question as favorite, vote up or vote down answers, accept an answer and so on.
 
 
-## Technology Stack
+### Technology Stack
 
 - Python 2.7
 - Django 1.9.4
@@ -33,12 +35,12 @@ The Q&A app works just like Stack Overflow. You can mark a question as favorite,
 - jQuery 2
 
 
-## Installation Guide
+### Installation Guide
 
 Take a look at our wiki page for a detailed [installation guide][3].
 
 
-## Demo
+### Demo
 
 Try Bootcamp now at [http://trybootcamp.vitorfs.com][2].
 
@@ -46,3 +48,8 @@ Try Bootcamp now at [http://trybootcamp.vitorfs.com][2].
 [1]: https://www.djangoproject.com/
 [2]: http://trybootcamp.vitorfs.com/
 [3]: https://github.com/vitorfs/bootcamp/wiki/Installing-and-Running-Bootcamp
+
+
+## HackIDE
+
+
