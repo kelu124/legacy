@@ -14,7 +14,7 @@ setup(
     ],
     entry_points=dict(
         console_scripts=[
-            'scanconverter = EchoImageProcessing.scanconverter:main',
+            'scanconverter = EchoImageProcessing.scanconverter:execution',
             'image_metrics = EchoImageProcessing.image_metrics:main',
             'denoise_image = EchoImageProcessing.denoise_image:main',
         ],
