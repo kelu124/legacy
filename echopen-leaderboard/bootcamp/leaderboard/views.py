@@ -25,7 +25,7 @@ import time
 
 
 
-# http://yuji.wordpress.com/2013/01/30/django-form-field-in-initial-data-requires-a-fieldfile-instance/
+
 class FakeField(object):
     storage = default_storage
 
@@ -153,8 +153,6 @@ class LeaderboardView(FormView):
     def post(self, request, *args, **kwargs):
         try:
             paging = self.execute_upload(request)
-            #t = threading.Thread(target=self.execute_upload, args=(request))
-            #t.start()
             return HttpResponseRedirect('/leaderboard')
         except Exception as e:
             print(e)
@@ -198,7 +196,11 @@ class LeaderboardView(FormView):
         ret = subprocess.check_output('python uploaded_custom.py', shell=True)
         import code_exec
         from code_exec import execute_user_script
-        run_duration = execute_user_script()
-        val_ret   = run_metrics('manu.jpg', 'denoise_image.jpg')
-        val_ret['duration'] = run_duration
+        import glob 
+        denoise_list = glob.glob('./kaggle/*_*.jpg')
+        total_list = glob.glob('./kaggle/*.jpg')
+        raw_list= list(set(total_list) - set(denoise_list))        
+        run_duration = execute_user_script(raw_list)
+        val_ret   = run_metrics('./kaggle/1.jpg', './kaggle/denoise_1.jpg')
+        val_ret['duration'] = run_duration 
         return val_ret
