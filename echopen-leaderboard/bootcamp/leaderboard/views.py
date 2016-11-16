@@ -97,9 +97,6 @@ class LeaderboardView(FormView):
                         button_type = 'btn-success'
                     self.uuid_index  = str(uuid.uuid4())
 
-
-                    resp['score']= random.randint(1, 100)
-
                     model = Algorithm
 
                     run_rank = model.objects.filter(rating__gt=int(resp['score'])).order_by('ranking')
@@ -119,8 +116,6 @@ class LeaderboardView(FormView):
                     else:
                         pass
 
-                    
-                   
 
                     b = Algorithm(run_id= self.uuid_index, name=request.user.username, user=request.user, ranking = rank, rating=resp['score'], button = button_type, time= resp['duration'], cpu=18)
                     b.save()
@@ -192,15 +187,17 @@ class LeaderboardView(FormView):
             for chunk in f.chunks():
                 destination.write(chunk)
             destination.close()
-
+        val_ret = {'score':0,'duration': 0}
         ret = subprocess.check_output('python uploaded_custom.py', shell=True)
         import code_exec
         from code_exec import execute_user_script
         import glob 
         denoise_list = glob.glob('./kaggle/*_*.jpg')
         total_list = glob.glob('./kaggle/*.jpg')
-        raw_list= list(set(total_list) - set(denoise_list))        
+        raw_list= list(set(total_list) - set(denoise_list))
         run_duration = execute_user_script(raw_list)
-        val_ret   = run_metrics('./kaggle/1.jpg', './kaggle/denoise_1.jpg')
-        val_ret['duration'] = run_duration 
+        for i in xrange(1,40):
+            tmp  = run_metrics('./kaggle/'+str(i)+'.jpg', './kaggle/denoise_'+str(i)+'.jpg')
+            val_ret['score'] += tmp['score']
+        val_ret['duration'] = run_duration
         return val_ret
