@@ -6,11 +6,10 @@
 
 The leaderboard webserver and image procssing server has been splitted. Here is the way to start the denoise server.
 The denoise server is a simple RPC Server which execute an denoise method provided by another server:
-`import callme`
-`def denoise(func_str):`
-    `os.system(func_str)`
-    `return a + b`
-
+```import callme
+   def denoise(func_str):
+   os.system(func_str)
+   return a + b```
   server = callme.Server(server_id='fooserver',
                        amqp_host='localhost')
 
