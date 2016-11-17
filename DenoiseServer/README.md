@@ -19,6 +19,11 @@ The denoise server is a simple RPC Server which execute an denoise method provid
   server.register_function(denoise, 'denoise')
   server.start()
 
+and a client which uses fooserver to add 1 + 1 and finally prints the result:
+
+  import callme
+  proxy = callme.Proxy(amqp_host='localhost')
+  print proxy.use_server('fooserver').add(1, 1)
 
 
 ### Installation
