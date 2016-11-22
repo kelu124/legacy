@@ -18,13 +18,13 @@ def denoise(func_str):
             denoise_list = glob.glob('./kaggle/*_*.jpg')
             total_list = glob.glob('./kaggle/*.jpg')
             raw_list= list(set(total_list) - set(denoise_list))
+            print raw_list
             run_duration = execute_user_script(raw_list)
-            for i in xrange(1,40):
-                tmp  = run_metrics('./kaggle/'+str(i)+'.jpg', './kaggle/denoise_'+str(i)+'.jpg')
-                print i, tmp['score']
-                val_ret['score'] += tmp['score']
+            for i in raw_list:
+                        print i
+                        tmp  = run_metrics(i, os.path.split(i)[0]+'/denoise_'+os.path.split(i)[1])
+                        val_ret['score'] += tmp['score']
             val_ret['duration'] = run_duration
-            val_ret['score'] = round(val_ret['score'])
             return val_ret            
         except Exception as  e:
            print e
