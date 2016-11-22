@@ -15,8 +15,8 @@ SECRET_KEY = '+h*i@$52+w(_eetvzgnkjq!q0ajz1qpgs-y9%89x4w3nlct=m'
 DEBUG = config('DEBUG', default=False, cast=bool)
 TEMPLATE_DEBUG = DEBUG
 
-BASICAUTH_USERNAME = 'HotelDieu00057'
-BASICAUTH_PASSWORD = 'SignalProcessing-18-11-2016'
+BASICAUTH_USERNAME = ''
+BASICAUTH_PASSWORD = ''
 
 
 #DATABASES = {
